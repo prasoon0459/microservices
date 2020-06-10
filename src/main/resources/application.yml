@@ -1,0 +1,67 @@
+server:
+  port: 8080
+
+spring:
+  jackson:
+    mapper:
+      DEFAULT_VIEW_INCLUSION: true 
+    serialization: 
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      FAIL_ON_IGNORED_PROPERTIES: false
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+
+
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: postgres
+    password: password
+    
+  jpa:
+    openInView: false
+    show_sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.jdbc.lob.non_contextual_creation: true
+
+  data:
+    jpa:
+      repositories.enabled: true
+
+logging:
+  level:
+    org.springframework.web: INFO
+    org.springframework.security: DEBUG
+    com.example: DEBUG
+  file:
+    name: app.log
+    
+client:
+  publicKey: |
+              -----BEGIN PUBLIC KEY-----
+              MIGeMA0GCSqGSIb3DQEBAQUAA4GMADCBiAKBgGJDo+f6pbPzSn9qabSJILB4K4Xr
+              gevIZj4h3R2TSSmp9MVIYGEZMgHBMi0b+rX0bxvNytvS4bhQtqcr5s/9pSi85ea5
+              8151+O8zp9Pblqw/FaxsPGH3bYVuV6YbjQ13gvWaoIGZ1ePrqOF/TeS9WcvxvqMA
+              IJvRKgs7/7+cB+DbAgMBAAE=
+              -----END PUBLIC KEY-----
+  privateKey: | 
+              -----BEGIN PRIVATE KEY-----
+              MIICWgIBAAKBgGJDo+f6pbPzSn9qabSJILB4K4XrgevIZj4h3R2TSSmp9MVIYGEZ
+              MgHBMi0b+rX0bxvNytvS4bhQtqcr5s/9pSi85ea58151+O8zp9Pblqw/FaxsPGH3
+              bYVuV6YbjQ13gvWaoIGZ1ePrqOF/TeS9WcvxvqMAIJvRKgs7/7+cB+DbAgMBAAEC
+              gYBDLeUv4q9IkIsdAx5TW/CqVO3Ed9bx4Kbt0W7/GkPJpTT/b1Tc7UG/61ondtp3
+              bS5M/uuyT8EbpqrJLX12Mv2nPDDAHVjFDYAlZ7DnheDiKcZQxU54b3q0l5676U7a
+              zaOEXWuFkFfrDGFgstqOq+EKNSnnTKjaS23KIZsbO0f++QJBAKXPv6XVRpU+sIV5
+              n5Dp5XewsX7d8anWVqeP4pOksUaT7o7mczISUJxchERsi9EIhSgcad9rzQi7/IBB
+              FI7FUa8CQQCXtla36sVgfrcCwIv1GuDUUOTCq1/akXxdr/Uruw/KiCizFf0sefVj
+              dwzmhzkVjH97pcBlKR7o1lWKVPGaCYqVAkAg9Xmv2gQMuIhYD8PzBzswnnO5tx5J
+              VyykZApytKL0V4Vs7EvroQ5a9lzoSPdF1r65KWS2H3SDDvLy/3y5oGlLAkAZENtL
+              D9MEmmsKXV3CZWp4KdViBIaVyivOHuBXFVUKlWyECkIGMzBD+st62ySnVstJVp1v
+              GVguCBuh+17foGvxAkApchyyvpISUAEmN/td6YMiMv9gvDug3I+4Z3xCP1TxsKGV
+              LVcy7bcsAFJzNX5Sq+WwbJtOWXFdUuf3c4ySjU1D
+              -----END PRIVATE KEY-----
+  
