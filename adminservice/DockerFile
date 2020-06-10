@@ -1,0 +1,4 @@
+FROM openjdk:14-buster
+VOLUME /tmp
+ADD target/admin-0.0.1-SNAPSHOT.jar admin.jar
+ENTRYPOINT ["java","-jar","/admin.jar"]
