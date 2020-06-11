@@ -1,13 +1,13 @@
 # Commands to Admin Service and Postgres
 
 ### Creating Network
-docker network create kong_net
+* docker network create kong_net
 
 ### Instantiate PostgreSQL insatnce
-docker run --name sql --network=kong_net -e "PGDATA=/var/lib/postgresql/data/pgdata" -v uservol:/var/lib/postgresql/data -e "POSTGRES_USER=postgres" -e "POSTGRES_DB=testdb" -e "POSTGRES_PASSWORD=password" bitnami/postgresql
+* docker run --shm-size=256m --network=kong_net -e "PGDATA=/var/lib/postgresql/data/pgdata" -v uservol:/var/lib/postgresql/data -e "POSTGRES_USER=postgres" -e "POSTGRES_DB=testdb" -e "POSTGRES_PASSWORD=password" --name userdb postgres:9.6
 
 ### Instantiate Admin instance
-docker run -e JAVA_OPTS=-Dserver.port=9090 --network=kong_net -p 9090:9090 --name admin2.3 admin2.3.slim
+* docker run -e JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom --network=kong_net -p 9090:9090 --name admin aayush21/admin:11-jre-slim
 
 ### Summary
 1. 1 Ports exposed: 9090 of admin for testing(to be removed)
