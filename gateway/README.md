@@ -20,3 +20,22 @@ docker run --name kong --network=kong_net -e "KONG_DATABASE=postgres" -e "KONG_P
 ### Instantiate KONGA instance
 docker run -p 1337:1337 --network kong_net -e "TOKEN_SECRET=key" -e "DB_ADAPTER=postgres" -e "DB_URI=postgres://kong:kong@kong_database:5432/konga" -e "NODE_ENV=production" --name konga pantsel/konga
 
+### Summary
+1. 3 Ports exposed: 80 for http kong , 443 for https kong, 1337 for konga admin.
+2. 1 volume: Postgres volume to store configurations for kong and konga.
+3. To enter psql - docker exec -ti kong_database psql -U kong -d kong
+4. -v "$PWD/my-postgres.conf":/etc/postgresql/postgresql.conf -c 'config_file=/etc/postgresql/postgresql.conf'
+
+### Possible Modifications
+1. Making docker-compose.yml
+2. Both kong and konga interact with Postgres as kong.
+3. Add starting user database for konga.
+4. Add support for multiple node mode in kong.
+5. -v "$PWD/my-postgres.conf":/etc/postgresql/postgresql.conf -c 'config_file=/etc/postgresql/postgresql.conf'
+
+### Documentation links:
+1. https://docs.konghq.com
+2. https://github.com/pantsel/konga
+3. https://hub.docker.com/_/postgres
+4. https://docs.docker.com
+5. https://www.postgresql.org/docs/10/app-psql.html
