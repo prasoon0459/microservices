@@ -1,6 +1,7 @@
 package com.dev.admin.admin;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,46 +18,50 @@ public class Router {
     
     @Autowired
     UserRepository userRepository;
-
+    
     @PostMapping(value="/user")
-    public String create(@RequestBody final User user){
+    public String create(@RequestBody final User rUser){
         try{
-            userRepository.save(user);
+            userRepository.save(rUser);
             return "Added";
-
-        }
-        catch(Exception e){
-            return e.toString();
+        } catch (final Exception e) {
+            return "Already Exists or Insufficient Data";
         }
     }
-    
-    @GetMapping(value="/user")
-    public List<User> read(){
+
+    @GetMapping(value = "/user")
+    public List<User> read() {
         return userRepository.findAll();
     }
-    
-    @PutMapping(value="/user/{uid}")
-    public String update(@PathVariable("uid") final long uid){
-        try{
-        User usr = userRepository.getOne(uid);
-        userRepository.delete(usr);
-        return "Updated";
-        }
-        catch(Exception e){
+
+    @PutMapping(value = "/user")
+    public String update(@RequestBody final User rUser) {
+        try {
+            final Optional<User> lUser = userRepository.findByUsername(rUser.getUsername());
+            if (lUser.isEmpty()) {
+                return "User does not exist";
+            } else {
+               //Insert Logic
+                return "Updated";
+            }
+        } catch (final Exception e) {
             return e.toString();
         }
     }
 
-    @DeleteMapping(value="/user/{uid}")
-    public String delete(@PathVariable("uid") final long uid){
-        try{
-            User usr = userRepository.getOne(uid);
-            userRepository.delete(usr);
-            return "Deleted";
+    @DeleteMapping(value = "/user/{rUsername}")
+    public String delete(@PathVariable("rUsername") String rUsername) {
+        try {
+            final Optional<User> lUser = userRepository.findByUsername(rUsername);
+            if (lUser.isEmpty()) {
+                return "Does not exist";
+            } else {
+                userRepository.delete(lUser.get());
+                return "Deleted";
             }
-            catch(Exception e){
-                return e.toString();
-            }
+        } catch (final Exception e) {
+            return e.toString();
+        }
     }
-   
+    
 }

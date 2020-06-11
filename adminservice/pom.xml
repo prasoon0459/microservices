@@ -9,11 +9,11 @@
   </parent>
   <groupId>com.dev.admin</groupId>
   <artifactId>admin</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>demo</name>
-  <description>Demo project for Spring Boot</description>
+  <version>0.1.1-SNAPSHOT</version>
+  <name>adminApp</name>
+  <description>Admin Microservice</description>
   <properties>
-    <java.version>14</java.version>
+    <java.version>11</java.version>
   </properties>
   <dependencies>
     <dependency>

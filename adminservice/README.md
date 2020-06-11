@@ -7,7 +7,7 @@
 * docker run --shm-size=256m --network=kong_net -e "PGDATA=/var/lib/postgresql/data/pgdata" -v uservol:/var/lib/postgresql/data -e "POSTGRES_USER=postgres" -e "POSTGRES_DB=testdb" -e "POSTGRES_PASSWORD=password" --name userdb postgres:9.6
 
 ### Instantiate Admin instance
-* docker run -e JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom --network=kong_net -p 9090:9090 --name admin aayush21/admin:11-jre-slim
+* docker run -e JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom --network=kong_net -p 9090:9090 --name admin aayush21/admin:11-jre-slim-2
 
 ### Endpoints
 1. Get /user - List of users in body. Exception on error.
