@@ -9,10 +9,16 @@
 ### Instantiate Admin instance
 * docker run -e JAVA_OPTS=-Djava.security.egd=file:/dev/./urandom --network=kong_net -p 9090:9090 --name admin aayush21/admin:11-jre-slim
 
+### Endpoints
+1. Get /user - List of users in body. Exception on error.
+2. Post /user - Request with 1 user JSON in body, returns "Already Exists" or "Added" in body on success. Exception on error.
+3. Put /user - Request with 1 user JSON in body, returns "Does not Exist" or "Updates" in body on success. Exception on error.
+4. Delete /user/{uid} - Request with uid in pathvariable, returns "Does not Exist" or "Deleted" in body on success. Exception on error.
+
 ### Summary
 1. 1 Ports exposed: 9090 of admin for testing(to be removed)
 2. 1 volume: Postgres volume to store userdb
-3. To enter psql - docker exec -ti sql psql -U postgres -d testdb
+3. To enter psql - docker exec -ti userdb psql -U postgres -d testdb
 4. -v "$PWD/my-postgres.conf":/etc/postgresql/postgresql.conf -c 'config_file=/etc/postgresql/postgresql.conf'
 
 ### Possible Modifications
