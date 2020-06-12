@@ -7,7 +7,7 @@
 ### Creating Network
 * docker network create kong_net
 
-### Instantiate ELasticSearch insatnce
+### Instantiate ElasticSearch insatnce
 * Check system config by following steps : 1. docker-machine ssh 2. cat /proc/sys/vm/max_map_count .  If value is less that 262144, run " sudo sysctl -w vm.max_map_count=262144 "
 * docker run -d -p 9200:9200 -p 9300:9300 --ulimit nofile=65535:65535 -v elavol:/usr/share/elasticsearch/data -e "discovery.type=single-node" -e "bootstrap.memory_lock=true" --ulimit memlock=-1:-1 -e ES_JAVA_OPTS="-Xms512m -Xmx512m" --name elasticsearch --network="kong_net" docker.elastic.co/elasticsearch/elasticsearch:7.7.0
 
@@ -15,7 +15,7 @@
 * docker run -d --name kibana --link elasticsearch:elasticsearch --network=”kong_net” -v kibvol:/usr/share/kibana/config/ -p 5601:5601 --name kibana docker.elastic.co/kibana/kibana:7.7.0
 
 ### Instantiate Logstash instance
-* docker run -d --name logstash -p 9600:9600 -p 8000:8000 -v logvol:/usr/share/logstash/pipeline/ --network="kong_net" docker.elastic.co/logstash/logstash:7.7.0
+* docker run --name logstash -v /c/Users/macra/Documents/Docker/volumes/logvol/logstash.conf:/usr/share/logstash/pipeline/logstash.conf -v /c/Users/macra/Documents/Docker/volumes/logvol/data/:/usr/share/logstash/data/ --network="kong_net" logstash 
 
 ### Summary
 1. 5 Ports exposed: 9200 , 9300 in elasticsearch ( to be removed), 9600 and 8000 in logstash(to be removed), 5601 kibana dashboard
