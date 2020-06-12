@@ -41,8 +41,12 @@ public class User implements UserDetails {
     
     @NotEmpty
     private String phone;
+    
+    @NotEmpty
+    private boolean valid=true;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    
+	@ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
     
@@ -106,5 +110,12 @@ public class User implements UserDetails {
   	public void setRoles(List<String> roles) {
   		this.roles = roles;
   	}
+  	public boolean isValid() {
+		return valid;
+	}
+	public void setValid(boolean valid) {
+		this.valid = valid;
+	}
+
 
 }
