@@ -1,5 +1,4 @@
-{
-"data" : [{"username":"aayush-ag21",
+[{"username":"aayush-ag21",
 "name":"aayush",
 "phone":"1234567890",
 "password":"notmypassword",
@@ -17,4 +16,3 @@
 "password":"notmypassword",
 "valid": false,
 "roles":["ROLE_USER"]}]
-}
