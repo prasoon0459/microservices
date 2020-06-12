@@ -4,6 +4,11 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+/src/main/resources/private_key.der
+/src/main/resources/public_key.der
+/src/main/resources/refresh_key.txt
+/app.log
+
 ### STS ###
 .apt_generated
 .classpath
