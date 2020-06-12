@@ -15,6 +15,15 @@
 3. Put /user - Request with 1 user JSON in body, returns "Does not Exist" or "Updates" in body on success. Exception on error.
 4. Delete /user/{uid} - Request with uid in pathvariable, returns "Does not Exist" or "Deleted" in body on success. Exception on error.
 
+### Sample Request Body
+{"username":"aayush-ag21",
+ "name":"aayush",
+ "password":"notmypassword",
+ "phone":"1234567890",
+ "valid":true,
+ "roles":["ROLE_ADMIN","ROLE_USER"]
+}
+
 ### Summary
 1. 1 Ports exposed: 9090 of admin for testing(to be removed)
 2. 1 volume: Postgres volume to store userdb
