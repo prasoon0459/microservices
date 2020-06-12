@@ -41,7 +41,9 @@ public class Router {
             if (lUser.isEmpty()) {
                 return "User does not exist";
             } else {
-               //Insert Logic
+                (lUser.get()).setRoles(rUser.getRoles());
+                (lUser.get()).setValid(rUser.getValid());
+                userRepository.save(lUser.get());
                 return "Updated";
             }
         } catch (final Exception e) {

@@ -19,13 +19,12 @@ import java.util.List;
 @Entity
 @Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User implements Serializable{
-  
   private static final long serialVersionUID = -2343243243242432341L;
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   Long id;
-  
+
   @NotEmpty
   private String username;
   
@@ -37,19 +36,21 @@ public class User implements Serializable{
   
   @NotEmpty
   private String phone;
+
+  private boolean valid;
   
   @ElementCollection(fetch = FetchType.EAGER)
   private List<String> roles = new ArrayList<>();
   
-  
   public User() {
   }
-  public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty String phone,  List<String> roles) {
+  public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty String phone,@NotEmpty Boolean valid, List<String> roles) {
     super();
     this.username = username;
     this.password = password;
     this.name=name;
     this.phone=phone;
+    this.valid=valid;
     this.roles=roles;
   }
   
@@ -66,6 +67,10 @@ public class User implements Serializable{
   }
   public String getPhone() {
     return this.phone;
+  }
+
+  public boolean getValid(){
+    return this.valid;
   }
   
   public List<String> getRoles(){
@@ -86,10 +91,12 @@ public class User implements Serializable{
   public void setPhone(String phone) {
     this.phone=phone;
   }
+
+  public void setValid(boolean valid){
+    this.valid=valid;
+  }
   
   public void setRoles(List<String> roles){
     this.roles=roles;
   }
-  
-  
 }
