@@ -1,0 +1,5 @@
+FROM openjdk:11-jre-slim
+EXPOSE 9090
+VOLUME /tmp
+ADD target/admin-0.1.1-SNAPSHOT.jar admin3.1.jar
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /admin3.1.jar ${0} ${@}"] 
