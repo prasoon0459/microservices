@@ -1,10 +1,8 @@
-
 <html>
 <head>
-  <title>Registration</title>
+  <title>Login</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
   </head>
   <style>
     *
@@ -14,14 +12,14 @@
       font-family:sans-serif;
     }
     .mine{
-      height: 120%;
+      height: 110%;
       width: 100%;
-      background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url("https://wallpaperplay.com/walls/full/0/8/1/52782.jpg");
+      background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(https://wallpaperplay.com/walls/full/0/8/1/52782.jpg);
       background-position:center;
       background-size:cover;
       position:absolute;
     }
-    .formbox{ height: 700px;
+    .formbox{ height: 480px;
       width: 380px;
       position:relative;
       margin:6% auto;
@@ -34,7 +32,7 @@
       margin:35px auto;
       position:relative;
       border-radius:30px;
-      box-shadow:0 0 20px 9px ; 
+      box-shadow:0 0 20px 9px ;
     }
     .togglebtn{
       padding:10px 30px;
@@ -61,15 +59,17 @@
       width:280 px;
       transition:0.5s;
     }
+    
+    
     .inputfield
     {
       width:100%;
-      padding:10px 2px;
+      padding:10px 0px;
       margin:10px 0;
       border-left:0;
       border-right:0;
       border-top:0;
-      border-bottom:2px solidblack;
+      border-bottom:2px solidwhite;
       outline:none;
       background:transparent;
       font-size: 15px;
@@ -78,33 +78,46 @@
     .submitbtn
     {
       width:85%;
+      padding-top:10px;
       padding:10px 30px;
       cursor:pointer;
       display:block;
-      margin:auto;
+      margin:30px 10px 30px 20px;
       background:linear-gradient(to right,skyblue,skyblue);
       border:0;
       outline:none;
-      border-radius:30px; 
-    }
-    .check
-    {
-      margin:30px 10px 30px 0;
+      border-radius:30px;
     }
     span
     {
       color:white;
       font-size:20px;
-      bottom:68px;
+      bottom:90px;
       position:absolute;
     }
-    #register
+    #login
     {
       left:50px;
+    }
+    
+    b
+    {
+      color:solidwhite;
+    }
+    p{
+      color: antiquewhite;
+      padding-top: 10px;
+    }
+    a{
+      color: antiquewhite; 
     }
     h1{
       color:white;
       position:center;
+    }
+    button
+    {
+      padding-top:20px;
     }
     ::placeholder{
       color : white;
@@ -113,14 +126,13 @@
   <body>
     <div class="mine">
       <div class="formbox">
-        <form id="register" class="inputgroup" autocomplete="off" >
-          <h1>Signup</h1>
-          <input type="text" class="inputfield" id="username" placeholder="Enter Username" required>
-          <input type="text" class="inputfield" id="name" placeholder="Enter Name" required>
-          <input type="text" class="inputfield" id="phone" placeholder="Enter Phone number" required>
-          <input type="password" class="inputfield" id="password" placeholder="Enter Password" required>
-          <input type="password" class="inputfield" id="repassword" placeholder="Re-enter Password" required>
-          <button type="button" value="Signup" class="submitbtn" id="btn-submit" value="Signup"><b>Signup</b></button>
+        <form id="form" class="inputgroup">
+          <h1>Login</h1>
+          <input type="text" class="inputfield" name="username" id="username" placeholder="Enter Username" required>
+          <input type="password" class="inputfield" name="password" id="password" placeholder="Enter Password" color="white" required>
+          <button type="button" name="submit" id="btn-submit" class="submitbtn" ><b>Login</b>
+          </button>
+          <p>Do not have an account? <a href="register.html" title="Signup">Signup</a></p>
         </form>
       </div>
     </div>
@@ -129,30 +141,21 @@
           document.getElementById("btn-submit").addEventListener("click", function (event){
             $(this).prop('disabled', true);
             let _username = $('#username').val();
-            let _name = $('#name').val();
-            let _phone = $('#phone').val();
             let _password = $('#password').val();
-            let _repassword = $('#repassword').val();
-            if(_password==_repassword){
-              $.ajax({url:"https://9d162669-3206-421a-8fe7-7d68482c1021.mock.pstmn.io/register",type: "POST",crossDomain: true,
-              data:{username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)},
-              dataType: "json",
-              success: function (response){
-                var resp = response;
-                console.log(resp);
-                window.location ="login.html";
-              },
-              error: function (xhr, status){
-                alert("error");
-                console.log('invalid');
-              }});
-            } 
-            else{
-              alert("Passwords dont match");
-              document.getElementById("form").reset();
-            }
+            $.ajax({url:"http://mockbin.org/request?foo=bar",type: "POST",crossDomain: true,
+            data: {username:_username,_password:_password },
+            dataType: "json",
+            success: function (response) {
+              let resp = response;
+              Cookies.set('token',response.headers.host);
+              window.location ="welcome.html";
+            },
+            error: function (xhr, status) {
+              alert("error");
+            }});
           });
         });
     </script>
   </body>
-</html>
+  </html>
+  
