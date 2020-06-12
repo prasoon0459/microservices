@@ -1,8 +1,6 @@
 package com.example.authApp.security;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -11,9 +9,10 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 //import java.util.Base64;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 
 @Configuration
 @ConfigurationProperties(prefix = "jwt")
@@ -34,8 +33,10 @@ public class JwtProperties {
 	
 	private static void setSecretPrivateKey() {
 		try {
-			File pvtkFiles=new File(JwtProperties.class.getClassLoader().getResource("private_key.der").getPath());
-			byte[] keyBytes = Files.readAllBytes(pvtkFiles.toPath());
+    		ClassPathResource cpr=new ClassPathResource("private_key.der");
+    		byte [] keyBytes=FileCopyUtils.copyToByteArray(cpr.getInputStream());
+//			File pvtkFiles=new File(JwtProperties.class.getClassLoader().getResource("private_key.der").getPath());
+//			byte[] keyBytes = Files.readAllBytes(pvtkFiles.toPath());
 			PKCS8EncodedKeySpec spec =
 			  new PKCS8EncodedKeySpec(keyBytes);
 			KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -55,8 +56,10 @@ public class JwtProperties {
 	}
     private static void setSecretPublicKey(){
     	try {
-			File pubkFiles=new File(JwtProperties.class.getClassLoader().getResource("public_key.der").getPath());
-			byte[] keyBytes = Files.readAllBytes(pubkFiles.toPath());
+    		ClassPathResource cpr=new ClassPathResource("public_key.der");
+    		byte [] keyBytes=FileCopyUtils.copyToByteArray(cpr.getInputStream());
+//			File pubkFiles=new File(JwtProperties.class.getClassLoader().getResource("public_key.der").getPath());
+//			byte[] keyBytes = Files.readAllBytes(pubkFiles.toPath());
 			X509EncodedKeySpec spec =
 				      new X509EncodedKeySpec(keyBytes);
 			KeyFactory kf = KeyFactory.getInstance("RSA");
@@ -75,8 +78,11 @@ public class JwtProperties {
     
     public static void setRefreshSecret() {
     	try {
-			File pubkFiles=new File(JwtProperties.class.getClassLoader().getResource("refresh_key.txt").getPath());
-			refreshSecret =new String(Files.readAllBytes(pubkFiles.toPath()));
+
+    		ClassPathResource cpr=new ClassPathResource("refresh_key");
+    		byte [] keyBytes=FileCopyUtils.copyToByteArray(cpr.getInputStream());
+//			File refresh=new File(JwtProperties.class.getClassLoader().getResource("refresh_key").getPath());
+			refreshSecret =new String(keyBytes);
     	}
     	catch (IOException e) {
 			e.printStackTrace();

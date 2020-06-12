@@ -15,8 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.example.authApp.domain.User;
-import com.example.authApp.security.InvalidJwtAuthException;
-import com.example.authApp.security.JwtProperties;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

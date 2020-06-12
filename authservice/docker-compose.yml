@@ -1,15 +1,33 @@
-version: '3.3' # specify docker-compose version
-
+version: "3.3"
 services:
-      
-  testdb:
-    container_name:  testdb
-    image: postgres
-    ports:
-      - "5432:5432"
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: testdb
+  postgres:
+    image: postgres:latest
+    network_mode: bridge
+    container_name: postgres
     volumes:
-      - ./data/postdb:/var/lib/postgresql
+      - postgres-data:/var/lib/postgresql/data
+    expose:
+    - 5432
+    ports:
+      - 5432:5432
+    environment:
+         - POSTGRES_PASSWORD=password
+         - POSTGRES_USER=postgres
+         - POSTGRES_DB=testdb
+    restart: unless-stopped
+# APP*****************************************
+  auth_app:
+    image: auth_app
+    network_mode: bridge
+    container_name: auth_app
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    links:
+      - postgres
+volumes:
+  postgres-data:

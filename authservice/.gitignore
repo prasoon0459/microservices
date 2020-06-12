@@ -6,7 +6,7 @@ target/
 
 /src/main/resources/private_key.der
 /src/main/resources/public_key.der
-/src/main/resources/refresh_key.txt
+/src/main/resources/refresh_key
 /app.log
 
 ### STS ###
