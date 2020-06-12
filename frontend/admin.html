@@ -1,0 +1,206 @@
+<html>
+<header>
+    <title>Admin2</title>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <link rel='stylesheet' href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
+    
+    <style>
+        h1{
+            padding-top: 20px;
+            text-align: center;
+            font-weight: bolder;
+            font-family:monospace;
+            font-size: 40px;
+            color: black;
+        }
+        table{
+            padding:20px;
+        }
+        th{
+            color:black;
+        }
+        .form-popup {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #f1f1f1;
+            z-index: 9;
+        }
+    </style>
+    
+</header>
+
+<body>
+    
+    <div>
+        <h1>Admin Service</h1>
+        <table id="personTableFull" class="cell-border compact stripe hover order-column">
+            <thead>
+                <tr>
+                    <th>USERNAME</th>
+                    <th>NAME</th>
+                    <th>PHONE</th>
+                    <th>PASSWORD</th>
+                    <th>VALID</th>
+                    <th>ROLES</th>
+                </tr>
+            </thead> 
+        </table>
+    </div>
+    
+    <div>
+        <input type="button" id="add" value="Update" onclick="openupdate()"></input>
+        <input type="button" id="update" value="Add" onclick="openadd()"></input>
+        <input type="button" id="add" value="Delete" onclick="opendelete()"></input>
+    </div>
+    
+    <div class="form-popup" id="updateform">
+        <form class="form-container">
+            <h1>Update user</h1>
+            
+            <label for="email"><b>Email</b></label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+            
+            <label for="psw"><b>Password</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            
+            <input type="button" value="put" onclick="update()"></input>
+            <input type="button" value="close" onclick="closeupdate()"></input>
+        </form>
+    </div>
+    
+    <div class="form-popup" id="addform">
+        <form class="form-container">
+            <h1>Add user</h1>
+            
+            <input type="text" class="inputfield" id="add_username" placeholder="Enter Username" required>
+            <input type="text" class="inputfield" id="add_name" placeholder="Enter Name" required>
+            <input type="text" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
+            <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" required>
+            <input type="checkbox" class="inputfield" id="add_valid" placeholder="isValid" required>
+            <input type="checkbox" class="inputfield" id="add_adminrole" placeholder="isAdmin" required>
+            <input type="checkbox" class="inputfield" id="add_userrole" placeholder="isUser" required>
+            <input type="button" value="post" onclick="add()"></input>
+            <input type="button" value="close" onclick="closeadd()"></input>
+        </form>
+    </div>
+    
+    <div class="form-popup" id="deleteform">
+        <form class="form-container">
+            <h1>Delete user</h1>
+            
+            <input type="text" class="inputfield" id="delete_username" placeholder="Enter Username" required>
+            <input type="button" value="delete" onclick="del()"></input>
+            <input type="button" value="close" onclick="closedelete()"></input>
+        </form>
+    </div>
+    
+</body>
+
+<script>
+    var table=$('#personTableFull');
+    $(document).ready( function () {
+        $.ajax({url:"https://raw.githubusercontent.com/aayush-ag21/microservices/master/frontend/sample.json?token=AKLGFWPT65ZP7VK7JYXFVXS64PTXA",
+        type:"GET",success:function(response){
+            var resp=JSON.parse(response);
+            console.log(response);
+            console.log(resp);
+            table.DataTable({
+                data: resp, 
+                columns: [
+                {"data":"username"},
+                {"data":"name"},
+                {"data":"phone"},
+                {"data":"password"},
+                {"data":"valid"},
+                {"data":"roles"}
+                ]
+            });
+        }});
+    });
+
+    function openadd(){
+        closeupdate();
+        closedelete();
+        document.getElementById("addform").style.display = "block";
+    }
+    function closeadd(){
+        document.getElementById("addform").style.display = "none";
+    }
+    function add(){
+        let this_role=[];
+        if($('#add_adminrole').val()){
+            this_role.push("ROLE_ADMIN");
+        }
+        if($('#add_userrole').val()){
+            this_role.push("ROLE_USER");
+        }
+        console.log(this_role);
+        $.ajax({url:"https://9d162669-3206-421a-8fe7-7d68482c1021.mock.pstmn.io/register",type: "POST",crossDomain: true,
+        data:{
+            username:$('#add_username').val(),
+            name:$('#add_name').val(),
+            phone:$('#add_phone').val(),
+            password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
+            valid:$('#add_valid').val(),
+            role:this_role.toString()},
+            dataType: "json",
+            success: function (response){
+                var resp = response;
+                console.log(resp);
+            },
+            error: function (xhr, status){
+                alert("error");
+                console.log('invalid');
+            }});
+            table.DataTable().row.add({
+                "username":$('#add_username').val(),
+                "name":$('#add_name').val(),
+                "phone":$('#add_phone').val(),
+                "password":CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
+                "valid":$('#add_valid').val(),
+                "roles":this_role.toString()}).draw();
+            closeadd();
+
+        }
+        
+        function openupdate(){
+            closeadd();
+            closedelete();
+            document.getElementById("updateform").style.display = "block";
+        }
+        function closeupdate(){
+            document.getElementById("updateform").style.display = "none";
+        }
+        function update(){
+            //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
+        }
+        
+        function opendelete(){
+            closeadd();
+            closeupdate();
+            document.getElementById("deleteform").style.display = "block";
+        }
+        function closedelete(){
+            document.getElementById("deleteform").style.display = "none";
+        }
+        function del(){
+            $.ajax({url:"https://9d162669-3206-421a-8fe7-7d68482c1021.mock.pstmn.io/register/"+$('#delete_username').val(),type: "DELETE",crossDomain: true,
+            success: function (response){
+                var resp = response;
+                console.log(resp);
+            },
+            error: function (xhr, status){
+                alert("error");
+                console.log('invalid');
+            }});
+            closedelete();
+            //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
+        }
+        
+    </script>
+    </html>
