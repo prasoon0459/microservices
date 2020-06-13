@@ -136,6 +136,11 @@
               $.ajax({url:"http://10.167.80.144/auth/register",type: "POST",crossDomain: true,
               data:{username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)},
               dataType: "json",
+              beforeSend: function(x) {
+            if (x && x.overrideMimeType) {
+              x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+          },
               success: function (response){
                 window.location ="login.html";
               },
