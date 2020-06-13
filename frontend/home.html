@@ -1,0 +1,77 @@
+
+<html>
+<head>
+  <title>Home</title>
+</head>
+<style>
+  *
+  {
+    margin:0;
+    padding:0;
+    font-family:san-serif;
+  }
+  header
+  {
+    background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url(https://wallpaperplay.com/walls/full/0/8/1/52782.jpg);
+    height: 100vh;
+    background-size:cover;
+    background-position:center;
+  }
+  .title
+  {
+    position:absolute;
+    top:40%;
+    left:30%;
+    transform:trannslate(-50%,-50%);
+  }
+  .title h1
+  {
+    color:white;
+    font-size:50px;
+  }
+  ul
+  {
+    list-style-type:none;
+    float:right;
+    margin-top:25px;
+  }
+  ul li
+  {
+    display:inline-block;
+    margin-top:25px;
+    font-size:25px;
+  }
+  ul li a
+  {
+    text-decoration:none;
+    color:#fff;
+    padding :5px 20px;
+    border: 1px transparent;
+    transition:0.6s ease
+  }
+  ul li a:hover{
+    background-color:#fff;
+    color:#000;
+  }
+  ul li.active a
+  {
+    background-color:#fff;
+    color:#000;    
+  }
+</style>
+
+<body>
+  <header>
+    <div class="mine">
+      <ul>
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href=login.html>Login</a></li>
+        <li><a href=register.html>Signup</a></li>
+      </ul>
+    </div>
+  </header>
+  <div class="title">
+    <h1>Our Practice School Project</h1>
+  </div>
+</body>
+</html>
