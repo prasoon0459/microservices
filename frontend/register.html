@@ -133,17 +133,15 @@
             let _password = $('#password').val();
             let _repassword = $('#repassword').val();
             if(_password==_repassword){
-              $.ajax({url:"https://9d162669-3206-421a-8fe7-7d68482c1021.mock.pstmn.io/register",type: "POST",crossDomain: true,
+              $.ajax({url:"http://10.167.80.144:8079/auth/refresh",type: "POST",crossDomain: true,
               data:{username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)},
               dataType: "json",
               success: function (response){
-                var resp = response;
-                console.log(resp);
                 window.location ="login.html";
               },
               error: function (xhr, status){
-                alert("error");
-                console.log('invalid');
+                alert("Please try again");
+                document.getElementById("form").reset();
               }});
             } 
             else{
