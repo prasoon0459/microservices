@@ -1,4 +1,4 @@
-# Commands to Run Logstash, ELasticSearch and Kibana
+# Commands to Run Logstash, ELasticsearch and Kibana
 
 ### Important Points
 * All commands are in detached mode, hence use " docker logs <container name> "to view status.
@@ -7,13 +7,13 @@
 ### Creating Network
 * docker network create kong_net
 
-### Instantiate ElasticSearch instance
+### Instantiate Elasticsearch instance
 * Check system config by following steps : 1. docker-machine ssh 2. cat /proc/sys/vm/max_map_count .  If value is less that 262144, run " sudo sysctl -w vm.max_map_count=262144 "
 * docker run -d --ulimit nofile=65535:65535 -v elavol:/usr/share/elasticsearch/data -e "discovery.type=single-node" -e "bootstrap.memory_lock=true" --ulimit memlock=-1:-1 -e ES_JAVA_OPTS="-Xms512m -Xmx512m" --name elasticsearch --network="kong_net" docker.elastic.co/elasticsearch/elasticsearch:7.7.0
 * ports 9200 and 9300 are not exposed
 
 ### Instantiate Kibana instance
-* docker run -d --name kibana --link elasticsearch:elasticsearch --network=”kong_net” -v kibvol:/usr/share/kibana/config/ -p 5601:5601 --name kibana docker.elastic.co/kibana/kibana:7.7.0
+* docker run -d --name kibana --link elasticsearch:elasticsearch --network="kong_net" -v kibvol:/usr/share/kibana/config/ -p 5601:5601 --name kibana docker.elastic.co/kibana/kibana:7.7.0
 
 ### Instantiate Logstash instance
 * docker run -d --name logstash -v logvol:/usr/share/logstash/pipeline/ -v logstash_persist:/usr/share/logstash/data/ --network="kong_net" docker.elastic.co/logstash/logstash:7.7.0
