@@ -31,10 +31,10 @@ function initiate(){
 
 function add(){
     let this_role=[];
-    if($('#add_adminrole').val()){
+    if($('#add_adminrole').is(":checked")){
         this_role.push("ROLE_ADMIN");
     }
-    if($('#add_userrole').val()){
+    if($('#add_userrole').is(":checked")){
         this_role.push("ROLE_USER");
     }
     let this_valid=$('#add_valid').is(":checked");
@@ -78,10 +78,10 @@ function add(){
     
     function update(){
         let this_role=[];
-        if($('#update_adminrole').val()){
+        if($('#update_adminrole').is(":checked")){
             this_role.push("ROLE_ADMIN");
         }
-        if($('#update_userrole').val()){
+        if($('#update_userrole').is(":checked")){
             this_role.push("ROLE_USER");
         }
         let this_valid=$('#update_valid').is(":checked");
@@ -111,7 +111,19 @@ function add(){
                 }
             }
         });
+        
+        table.DataTable().rows( function ( idx, data, node ) {
+            return data[0] === $('#update_username').val();//find username in 0th column
+        }).remove();
+        table.DataTable().row.add({
+            "username":$('#update_username').val(),
+            "name":$('#update_name').val(),
+            "phone":$('#update_phone').val(),
+            "password":CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
+            "valid":this_valid,
+            "roles":this_role.toString()}).draw();
         closeupdate();
+
         //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
     }
     

@@ -57,16 +57,16 @@
     <div>
         <input type="button" id="add" value="Update" onclick="openupdate()"></input>
         <input type="button" id="update" value="Add" onclick="openadd()"></input>
-        <input type="button" id="add" value="Delete" onclick="opendelete()"></input>
+        <input type="button" id="delete" value="Delete" onclick="opendelete()"></input>
     </div>
     
     <div class="form-popup" id="updateform" autocomplete="off">
-        <form class="form-container">
+        <form class="form-container" id="update-container">
             <h1>Update user</h1>
             
             <input type="text" class="inputfield" id="update_username" placeholder="Enter Username" required>
             <input type="text" class="inputfield" id="update_name" placeholder="Enter Name" required>
-            <input type="text" class="inputfield" id="update_phone" placeholder="Enter Phone number" required>
+            <input type="number" class="inputfield" id="update_phone" placeholder="Enter Phone number" required>
             <input type="password" class="inputfield" id="update_password" placeholder="Enter Password" required>
             <label><input type="checkbox" class="inputfield" id="update_valid">isValid</label>
             <label><input type="checkbox" class="inputfield" id="update_adminrole">Admin</label>
@@ -77,13 +77,13 @@
     </div>
     
     <div class="form-popup" id="addform" autocomplete="off">
-        <form class="form-container">
+        <form class="form-container" id="add-container">
             <h1>Add user</h1>
             
             <input type="text" class="inputfield" id="add_username" placeholder="Enter Username" required>
             <input type="text" class="inputfield" id="add_name" placeholder="Enter Name" required>
-            <input type="text" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
-            <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" required>
+            <input type="number" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
+            <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" minlength="8" required>
             <label><input type="checkbox" class="inputfield" id="add_valid">isValid</label>
             <label><input type="checkbox" class="inputfield" id="add_adminrole">Admin</label>
             <label><input type="checkbox" class="inputfield" id="add_userrole">User</label>
@@ -93,7 +93,7 @@
     </div>
     
     <div class="form-popup" id="deleteform" autocomplete="off">
-        <form class="form-container">
+        <form class="form-container" id="delete-container">
             <h1>Delete user</h1>
             
             <input type="text" class="inputfield" id="delete_username" placeholder="Enter Username" required>

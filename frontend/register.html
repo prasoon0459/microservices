@@ -117,9 +117,9 @@
           <h1>Signup</h1>
           <input type="text" class="inputfield" id="username" placeholder="Enter Username" required>
           <input type="text" class="inputfield" id="name" placeholder="Enter Name" required>
-          <input type="text" class="inputfield" id="phone" placeholder="Enter Phone number" required>
-          <input type="password" class="inputfield" id="password" placeholder="Enter Password" required>
-          <input type="password" class="inputfield" id="repassword" placeholder="Re-enter Password" required>
+          <input type="number" class="inputfield" id="phone" placeholder="Enter Phone number" required>
+          <input type="password" class="inputfield" id="password" placeholder="Enter Password" minlength="8" required>
+          <input type="password" class="inputfield" id="repassword" placeholder="Re-enter Password" minlength="8" required>
           <button type="button" value="Signup" class="submitbtn" id="btn-submit" value="Signup"><b>Signup</b></button>
         </form>
       </div>
@@ -140,8 +140,14 @@
                 window.location ="./signin.html";
               },
               'error': function (xhr, status){
+                if(xhr.status==409){
+                  document.alert('Username already taken');
+                  document.getElementById("form").reset();
+                }
+                else{
                 alert("Please try again");
                 document.getElementById("form").reset();
+                }
               }});
             } 
             else{
