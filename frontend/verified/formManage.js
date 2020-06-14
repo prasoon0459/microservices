@@ -7,7 +7,6 @@ function closeadd(){
     document.getElementById("addform").style.display = "none";
 }
 
-
 function openupdate(){
     closeadd();
     closedelete();

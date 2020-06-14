@@ -14,15 +14,19 @@ function initiate(){
             ]
         });
     },
+    statusCode: {
+        401: function() {
+            if(refresh()){
+                console.log("Token was refreshed");
+                add();
+            }
+            else{
+                console.log("Token was not refreshed");
+            }
+        }
+      },
     error: function (xhr, status){
         console.log(xhr);
-        if(refresh()){
-            console.log("Token was refreshed");
-            initiate();
-        }
-        else{
-            console.log("Token was not refreshed");
-        }
     }});
 };
 
@@ -47,15 +51,19 @@ function add(){
         success: function (response){
             console.log(respone);
         },
+        statusCode: {
+            401: function() {
+                if(refresh()){
+                    console.log("Token was refreshed");
+                    add();
+                }
+                else{
+                    console.log("Token was not refreshed");
+                }
+            }
+          },
         error: function (xhr, status){
             console.log(xhr);
-            if(refresh()){
-                console.log("Token was refreshed");
-                add();
-            }
-            else{
-                console.log("Token was not refreshed");
-            }
         }
     });
         
@@ -73,10 +81,10 @@ function add(){
         
         function update(){
             let this_role=[];
-            if($('#add_adminrole').val()){
+            if($('#update_adminrole').val()){
                 this_role.push("ROLE_ADMIN");
             }
-            if($('#add_userrole').val()){
+            if($('#update_userrole').val()){
                 this_role.push("ROLE_USER");
             }
             $.ajax({url:"http://10.167.80.144/user",'type': "PUT",
@@ -92,16 +100,21 @@ function add(){
                 success: function (response){
                     console.log(respone);
                 },
+                statusCode: {
+                    401: function() {
+                        if(refresh()){
+                            console.log("Token was refreshed");
+                            add();
+                        }
+                        else{
+                            console.log("Token was not refreshed");
+                        }
+                    }
+                  },
                 error: function (xhr, status){
                     console.log(xhr);
-                    if(refresh()){
-                        console.log("Token was refreshed");
-                        add();
-                    }
-                    else{
-                        console.log("Token was not refreshed");
-                    }
-                }});
+                   }
+                });
                 closeupdate();
                 //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
             }
@@ -113,6 +126,17 @@ function add(){
                     var resp = response;
                     console.log(resp);
                 },
+                statusCode: {
+                    401: function() {
+                        if(refresh()){
+                            console.log("Token was refreshed");
+                            add();
+                        }
+                        else{
+                            console.log("Token was not refreshed");
+                        }
+                    }
+                  },
                 error: function (xhr, status){
                     refresh();
                     if(refresh_success){
