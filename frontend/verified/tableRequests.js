@@ -116,10 +116,10 @@ function add(){
         }).remove().draw();
         table.DataTable().row.add({
             "username":$('#update_username').val(),
-            "name":$('#update_name').val(),
+            /*"name":$('#update_name').val(),
             "phone":$('#update_phone').val(),
             "password":CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
-            "valid":this_valid,
+            */"valid":this_valid,
             "roles":this_role.toString()}).draw();
             closeupdate();
             

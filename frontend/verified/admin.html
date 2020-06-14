@@ -6,10 +6,16 @@
     <link rel='stylesheet' href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="./refresh.js"></script>
     <script src="./tableRequests.js"></script>
     <script src="./formManage.js"></script>
+    <script>
+        var table=$('#personTableFull');
+        $(document).ready(function(){
+            console.log('ready');
+            initiate();
+        });
+    </script>
     <style>
         h1{
             padding-top: 20px;
@@ -104,10 +110,4 @@
     
 </body>
 
-<script>    
-    var table=$('#personTableFull');
-    $(document).ready(function(){
-    initiate();
-    });
-</script>
 </html>

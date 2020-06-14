@@ -2,7 +2,6 @@
 <head>
   <title>Sign In</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
   </head>
   <style>
@@ -147,9 +146,7 @@
             'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
             'contentType':"application/json",dataType: "json",
             success: function (response) {
-              Cookies.set('access_token',response.access_token,{expires:(response.expiry/86400000)});
-              Cookies.set('refresh_token',response.refresh_token,{expires:60,path:'/auth/refresh'});
-              window.location ="./verified/welcome.html";
+             window.location ="./verified/welcome.html";
             },
             error: function (xhr, status) {
               alert("error");
