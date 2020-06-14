@@ -14,8 +14,10 @@ function initiate(){
             ]
         });
     },
-    statusCode: {
-        401: function() {
+    error: function (xhr, status){
+        console.log(xhr);
+
+        if(xhr.status==401){
             if(refresh()){
                 console.log("Token was refreshed");
                 initiate();
@@ -24,9 +26,6 @@ function initiate(){
                 console.log("Token was not refreshed");
             }
         }
-    },
-    error: function (xhr, status){
-        console.log(xhr);
     }});
 };
 
@@ -58,8 +57,8 @@ function add(){
         success: function (response){
             console.log(respone);
         },
-        statusCode: {
-            401: function() {
+        error: function (xhr, status){
+            if(xhr.status==401){
                 if(refresh()){
                     console.log("Token was refreshed");
                     add();
@@ -68,9 +67,6 @@ function add(){
                     console.log("Token was not refreshed");
                 }
             }
-        },
-        error: function (xhr, status){
-            console.log(xhr);
         }
     });
     
@@ -79,7 +75,7 @@ function add(){
         "name":$('#add_name').val(),
         "phone":$('#add_phone').val(),
         "password":CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
-        "valid":$('#add_valid').val(),
+        "valid":this_valid,
         "roles":this_role.toString()}).draw();
         
         closeadd();
@@ -107,15 +103,16 @@ function add(){
             name:$('#update_name').val(),
             phone:$('#update_phone').val(),
             password:CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
-            valid:$('#update_valid').val(),
+            valid:this_valid,
             role:this_role.toString()}),
             'contentType':"application/json",
             dataType: "json",
             success: function (response){
                 console.log(respone);
             },
-            statusCode: {
-                401: function() {
+            error: function (xhr, status){
+                console.log(xhr);
+                if(xhr.status==401){
                     if(refresh()){
                         console.log("Token was refreshed");
                         update();
@@ -124,9 +121,6 @@ function add(){
                         console.log("Token was not refreshed");
                     }
                 }
-            },
-            error: function (xhr, status){
-                console.log(xhr);
             }
         });
         closeupdate();
@@ -140,18 +134,8 @@ function add(){
             var resp = response;
             console.log(resp);
         },
-        statusCode: {
-            401: function() {
-                if(refresh()){
-                    console.log("Token was refreshed");
-                    del();
-                }
-                else{
-                    console.log("Token was not refreshed");
-                }
-            }
-        },
         error: function (xhr, status){
+            if(xhr.status==401){
             refresh();
             if(refresh_success){
                 console.log("Token was refreshed");
@@ -160,6 +144,7 @@ function add(){
             else{
                 console.log("Token was not refreshed");
             }
+        }
         }});
         closedelete();
         console.log(row(search($('#delete_username').val())));
