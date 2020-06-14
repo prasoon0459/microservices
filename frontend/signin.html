@@ -133,7 +133,7 @@
           <input type="password" class="inputfield" name="password" id="password" placeholder="Enter Password" color="white" required>
           <button type="button" name="submit" id="btn-submit" class="submitbtn" ><b>Login</b>
           </button>
-          <p>Do not have an account? <a href="register.html" title="Signup">Signup</a></p>
+          <p>Do not have an account? <a href="./register.html" title="Signup">Signup</a></p>
         </form>
       </div>
     </div>
@@ -149,7 +149,7 @@
             success: function (response) {
               Cookies.set('access_token',response.access_token,{expires:(response.expiry/86400000)});
               Cookies.set('refresh_token',response.refresh_token,{expires:60,path:'/auth/refresh'});
-              window.location ="welcome.html";
+              window.location ="./verified/welcome.html";
             },
             error: function (xhr, status) {
               alert("error");

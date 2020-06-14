@@ -137,7 +137,7 @@
               'data':JSON.stringify({username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
               'contentType':"application/json",dataType: "json",
               'success': function (response){
-                window.location ="signin.html";
+                window.location ="./signin.html";
               },
               'error': function (xhr, status){
                 alert("Please try again");
