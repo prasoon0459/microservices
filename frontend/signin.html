@@ -147,10 +147,11 @@
             'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
             'contentType':"application/json",dataType: "json",
             success: function (response) {
-              let resp = JSON.parse(response);
+              let resp = response;
+              console.log(response);
               console.log(resp);
-              Cookies.set('access_token',resp.access_token,{expires:(resp.expiry/86400000)});
-              Cookies.set('refresh_token',resp.refresh_token,{expires:30,path:'/auth/refresh'});
+              Cookies.set('access_token',resp.responseJSON.access_token,{expires:(resp.responseJSON.expiry/86400000)});
+              Cookies.set('refresh_token',resp.responseJSON.refresh_token,{expires:30,path:'/auth/refresh'});
               window.location ="welcome.html";
             },
             error: function (xhr, status) {
