@@ -144,7 +144,7 @@
             let _username = $('#username').val();
             let _password = $('#password').val();
             $.ajax({'url':"http://10.167.80.144/auth/signin",'type': "POST",
-            'data': JSON.stringify({username:_username,_password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
+            'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
             'contentType':"application/json",dataType: "json",
             success: function (response) {
               let resp = response;
