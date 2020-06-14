@@ -15,7 +15,7 @@ function initiate(){
         });
     },
     error: function (xhr, status){
-        console.log(status);
+        console.log(xhr);
         if(refresh()){
             console.log("Token was refreshed");
             initiate();
@@ -48,7 +48,7 @@ function add(){
             console.log(respone);
         },
         error: function (xhr, status){
-            console.log(status);
+            console.log(xhr);
             if(refresh()){
                 console.log("Token was refreshed");
                 add();
@@ -92,7 +92,7 @@ function add(){
                     console.log(respone);
                 },
                 error: function (xhr, status){
-                    console.log(status);
+                    console.log(xhr);
                     if(refresh()){
                         console.log("Token was refreshed");
                         add();
