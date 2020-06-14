@@ -101,7 +101,6 @@ function add(){
                         console.log("Token was not refreshed");
                     }
                 }});
-                initiate();
                 closeupdate();
                 //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
             }
@@ -124,6 +123,7 @@ function add(){
                     }
                 }});
                 closedelete();
-                initiate();
+                console.log(row(search($('#delete_username').val())));
+                table.row(search($('#delete_username').val())).remove().draw();
                 //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
             }
