@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Login</title>
+  <title>Sign In</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
   </head>
@@ -142,12 +142,13 @@
             $(this).prop('disabled', true);
             let _username = $('#username').val();
             let _password = $('#password').val();
-            $.ajax({url:"http://10.167.80.144/auth/register",type: "POST",crossDomain: true,
-            data: {username:_username,_password:_password },
-            dataType: "json",
+            $.ajax({'url':"http://10.167.80.144/auth/signin",'type': "POST",
+            'data': JSON.stringify({username:_username,_password:_password }),
+            'contentType':"application/json",dataType: "json",
             success: function (response) {
               let resp = response;
-              Cookies.set('token',response.headers.host);
+              Cookies.set('access_token',response.body.access_token,{expires:(response.body.expiry/86400000)});
+              Cookies.set('refresh_token',response.body.refresh_token,{expires:30,path:'/auth/refresh'});
               window.location ="welcome.html";
             },
             error: function (xhr, status) {
