@@ -148,7 +148,7 @@
             'contentType':"application/json",dataType: "json",
             success: function (response) {
               Cookies.set('access_token',response.access_token,{expires:(response.expiry/86400000)});
-              Cookies.set('refresh_token',response.refresh_token,{expires:30,path:'/auth/refresh'});
+              Cookies.set('refresh_token',response.refresh_token,{expires:60,path:'/auth/refresh'});
               window.location ="welcome.html";
             },
             error: function (xhr, status) {
