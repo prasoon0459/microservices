@@ -47,21 +47,7 @@ function add(){
         success: function (response){
             console.log(respone);
         },
-        statusCode: {
-            400: function() {
-              alert("user already exists" );
-            },
-            401: function(){
-                if(refresh()){
-                    console.log("Token was refreshed");
-                    add();
-                }
-                else{
-                    console.log("Token was not refreshed");
-                }    
-            }
-          }
-/*        error: function (xhr, status){
+        error: function (xhr, status){
             console.log(xhr);
             if(refresh()){
                 console.log("Token was refreshed");
@@ -70,7 +56,7 @@ function add(){
             else{
                 console.log("Token was not refreshed");
             }
-        }*/
+        }
     });
         
         table.DataTable().row.add({
@@ -95,11 +81,11 @@ function add(){
             }
             $.ajax({url:"http://10.167.80.144/user",'type': "PUT",
             data:JSON.stringify({
-                username:$('#add_username').val(),
-                name:$('#add_name').val(),
-                phone:$('#add_phone').val(),
-                password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
-                valid:$('#add_valid').val(),
+                username:$('#update_username').val(),
+                name:$('#update_name').val(),
+                phone:$('#update_phone').val(),
+                password:CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
+                valid:$('#update_valid').val(),
                 role:this_role.toString()}),
                 'contentType':"application/json",
                 dataType: "json",
@@ -139,6 +125,6 @@ function add(){
                 }});
                 closedelete();
                 console.log(row(search($('#delete_username').val())));
-                table.row(search($('#delete_username').val())).remove().draw();
+                //table.row(search($('#delete_username').val())).remove().draw();
                 //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
             }
