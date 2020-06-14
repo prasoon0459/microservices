@@ -135,7 +135,7 @@
             if(_password==_repassword){
               $.ajax({'url':"http://10.167.80.144/auth/register",'type': "POST",'crossDomain': true,
               'data':JSON.stringify({username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
-              'contentType':"text/plain",dataType: "json",
+              'contentType':"application/json",dataType: "json",
               'success': function (response){
                 window.location ="login.html";
               },
