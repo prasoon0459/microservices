@@ -7,6 +7,8 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/md5.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <script src="./refresh.js"></script>
+    <script src="./tableButtons.js"></script>
     <style>
         h1{
             padding-top: 20px;
@@ -61,13 +63,13 @@
         <form class="form-container">
             <h1>Update user</h1>
             
-            <input type="text" class="inputfield" id="add_username" placeholder="Enter Username" required>
-            <input type="text" class="inputfield" id="add_name" placeholder="Enter Name" required>
-            <input type="text" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
-            <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" required>
-            <label><input type="checkbox" class="inputfield" id="add_valid" value="">Option 1</label>
-            <label><input type="checkbox" class="inputfield" id="add_adminrole" value="">Option 1</label>
-            <label><input type="checkbox" class="inputfield" id="add_userrole" placeholder="isUser" value="">Option 1</label>   
+            <input type="text" class="inputfield" id="update_username" placeholder="Enter Username" required>
+            <input type="text" class="inputfield" id="update_name" placeholder="Enter Name" required>
+            <input type="text" class="inputfield" id="update_phone" placeholder="Enter Phone number" required>
+            <input type="password" class="inputfield" id="update_password" placeholder="Enter Password" required>
+            <label><input type="checkbox" class="inputfield" id="update_valid">isValid</label>
+            <label><input type="checkbox" class="inputfield" id="update_adminrole">Admin</label>
+            <label><input type="checkbox" class="inputfield" id="update_userrole">User</label>   
             <input type="button" value="put" onclick="update()"></input>
             <input type="button" value="close" onclick="closeupdate()"></input>
         </form>
@@ -81,9 +83,9 @@
             <input type="text" class="inputfield" id="add_name" placeholder="Enter Name" required>
             <input type="text" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
             <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" required>
-            <label><input type="checkbox" class="inputfield" id="add_valid" value="">Option 1</label>
-            <label><input type="checkbox" class="inputfield" id="add_adminrole" value="">Option 1</label>
-            <label><input type="checkbox" class="inputfield" id="add_userrole" placeholder="isUser" value="">Option 1</label>
+            <label><input type="checkbox" class="inputfield" id="add_valid">isValid</label>
+            <label><input type="checkbox" class="inputfield" id="add_adminrole">Admin</label>
+            <label><input type="checkbox" class="inputfield" id="add_userrole">User</label>
             <input type="button" value="post" onclick="add()"></input>
             <input type="button" value="close" onclick="closeadd()"></input>
         </form>
@@ -101,23 +103,9 @@
     
 </body>
 
-<script>
-    let refresh_success;
-    function refresh(){
-        console.log('refresh called');
-        $.ajax({'url':"http://10.167.80.144/auth/refresh",'type': "POST",
-        'data': JSON.stringify({refresh_token:Cookies.get('refresh_token')}),
-        'contentType':"application/json",dataType: "json",
-        success: function (response) {
-            Cookies.set('access_token',response.access_token,{expires:(response.expiry/86400000)});
-            refresh_success=true;
-        },
-        error: function (xhr, status){
-            refresh_success=false;
-        }});
-    }
-    
+<script>    
     var table=$('#personTableFull');
+    show(table);
     $(document).ready( function () {
         function initiate(){
             $.ajax({'url':"http://10.167.80.144/user",'type': "GET",
