@@ -37,13 +37,7 @@ function add(){
     if($('#add_userrole').val()){
         this_role.push("ROLE_USER");
     }
-    let this_valid;
-    if($('#add_valid').is(":checked")){
-        this_valid=true;
-    }
-    else{
-        this_valid=false;
-    };
+    let this_valid=$('#add_valid').is(":checked");
     $.ajax({url:"http://10.167.80.144/user",'type': "POST",
     data:JSON.stringify({
         username:$('#add_username').val(),
@@ -90,13 +84,7 @@ function add(){
         if($('#update_userrole').val()){
             this_role.push("ROLE_USER");
         }
-        let this_valid;
-        if($('#update_valid').is(":checked")){
-            this_valid=true;
-        }
-        else{
-            this_valid=false;
-        };
+        let this_valid=$('#update_valid').is(":checked");
         $.ajax({url:"http://10.167.80.144/user",'type': "PUT",
         data:JSON.stringify({
             username:$('#update_username').val(),
@@ -146,11 +134,8 @@ function add(){
                 }
             }
         }});
-        table
-        .rows( function ( idx, data, node ) {
+        table.DataTable().rows( function ( idx, data, node ) {
             return data[0] === $('#delete_username').val();//find username in 0th column
-        } )
-        .remove()
-        .draw();
+        }).remove().draw();
         closedelete();
     }
