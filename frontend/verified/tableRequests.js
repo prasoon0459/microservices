@@ -16,7 +16,7 @@ function initiate(){
     },
     error: function (xhr, status){
         console.log(xhr);
-
+        
         if(xhr.status==401){
             if(refresh()){
                 console.log("Token was refreshed");
@@ -50,7 +50,7 @@ function add(){
         name:$('#add_name').val(),
         phone:$('#add_phone').val(),
         password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
-        valid:$('#add_valid').val(),
+        valid:this_valid,
         role:this_role.toString()}),
         'contentType':"application/json",
         dataType: "json",
@@ -136,18 +136,21 @@ function add(){
         },
         error: function (xhr, status){
             if(xhr.status==401){
-            refresh();
-            if(refresh_success){
-                console.log("Token was refreshed");
-                del();
+                refresh();
+                if(refresh_success){
+                    console.log("Token was refreshed");
+                    del();
+                }
+                else{
+                    console.log("Token was not refreshed");
+                }
             }
-            else{
-                console.log("Token was not refreshed");
-            }
-        }
         }});
+        table
+        .rows( function ( idx, data, node ) {
+            return data[0] === $('#delete_username').val();//find username in 0th column
+        } )
+        .remove()
+        .draw();
         closedelete();
-        console.log(row(search($('#delete_username').val())));
-        //table.row(search($('#delete_username').val())).remove().draw();
-        //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
     }
