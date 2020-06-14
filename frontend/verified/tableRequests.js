@@ -45,7 +45,7 @@ function add(){
         phone:$('#add_phone').val(),
         password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
         valid:this_valid,
-        role:this_role}),
+        roles:this_role}),
         'contentType':"application/json",
         dataType: "json",
         success: function (response){
@@ -92,7 +92,7 @@ function add(){
             phone:$('#update_phone').val(),
             password:CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
             valid:this_valid,
-            role:this_role}),
+            roles:this_role}),
             'contentType':"application/json",
             dataType: "json",
             success: function (response){
@@ -111,42 +111,41 @@ function add(){
                 }
             }
         });
-        /*
         table.DataTable().rows( function ( idx, data, node ) {
-            return data[0] === $('#update_username').val();//find username in 0th column
-        }).remove();
+            return data.username == $('#update_username').val();
+        }).remove().draw();
         table.DataTable().row.add({
             "username":$('#update_username').val(),
             "name":$('#update_name').val(),
             "phone":$('#update_phone').val(),
             "password":CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
             "valid":this_valid,
-            "roles":this_role.toString()}).draw();*/
-        closeupdate();
-
-      }
-    
-    
-    function del(){
-        $.ajax({url:"http://10.167.80.144/user/"+$('#delete_username').val(),'type':"DELETE",
-        success: function (response){
-            var resp = response;
-            console.log(resp);
-        },
-        error: function (xhr, status){
-            if(xhr.status==401){
-                refresh();
-                if(refresh_success){
-                    console.log("Token was refreshed");
-                    del();
+            "roles":this_role.toString()}).draw();
+            closeupdate();
+            
+        }
+        
+        
+        function del(){
+            $.ajax({url:"http://10.167.80.144/user/"+$('#delete_username').val(),'type':"DELETE",
+            success: function (response){
+                var resp = response;
+                console.log(resp);
+            },
+            error: function (xhr, status){
+                if(xhr.status==401){
+                    refresh();
+                    if(refresh_success){
+                        console.log("Token was refreshed");
+                        del();
+                    }
+                    else{
+                        console.log("Token was not refreshed");
+                    }
                 }
-                else{
-                    console.log("Token was not refreshed");
-                }
-            }
-        }});
-        table.DataTable().rows( function ( idx, data, node ) {
-            return data[0] === $('#delete_username').val();//find username in 0th column
-        }).remove().draw();
-        closedelete();
-    }
+            }});
+            table.DataTable().rows( function ( idx, data, node ) {
+                return data.username == $('#delete_username').val();
+            }).remove().draw();
+            closedelete();
+        }
