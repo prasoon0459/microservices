@@ -45,7 +45,7 @@ function add(){
         phone:$('#add_phone').val(),
         password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
         valid:this_valid,
-        role:this_role.toString()}),
+        role:this_role}),
         'contentType':"application/json",
         dataType: "json",
         success: function (response){
@@ -70,7 +70,7 @@ function add(){
         "phone":$('#add_phone').val(),
         "password":CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
         "valid":this_valid,
-        "roles":this_role.toString()}).draw();
+        "roles":this_role}).draw();
         
         closeadd();
         
@@ -92,7 +92,7 @@ function add(){
             phone:$('#update_phone').val(),
             password:CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
             valid:this_valid,
-            role:this_role.toString()}),
+            role:this_role}),
             'contentType':"application/json",
             dataType: "json",
             success: function (response){
@@ -111,7 +111,7 @@ function add(){
                 }
             }
         });
-        
+        /*
         table.DataTable().rows( function ( idx, data, node ) {
             return data[0] === $('#update_username').val();//find username in 0th column
         }).remove();
@@ -121,11 +121,10 @@ function add(){
             "phone":$('#update_phone').val(),
             "password":CryptoJS.MD5($('#update_password').val()).toString(CryptoJS.enc.Base64),
             "valid":this_valid,
-            "roles":this_role.toString()}).draw();
+            "roles":this_role.toString()}).draw();*/
         closeupdate();
 
-        //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
-    }
+      }
     
     
     function del(){
