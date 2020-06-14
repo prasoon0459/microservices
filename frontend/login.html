@@ -142,7 +142,7 @@
             $(this).prop('disabled', true);
             let _username = $('#username').val();
             let _password = $('#password').val();
-            $.ajax({url:"http://mockbin.org/request?foo=bar",type: "POST",crossDomain: true,
+            $.ajax({url:"http://10.167.80.144/auth/register",type: "POST",crossDomain: true,
             data: {username:_username,_password:_password },
             dataType: "json",
             success: function (response) {
