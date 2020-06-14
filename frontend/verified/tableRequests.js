@@ -47,7 +47,21 @@ function add(){
         success: function (response){
             console.log(respone);
         },
-        error: function (xhr, status){
+        statusCode: {
+            400: function() {
+              alert("user already exists" );
+            },
+            401: function(){
+                if(refresh()){
+                    console.log("Token was refreshed");
+                    add();
+                }
+                else{
+                    console.log("Token was not refreshed");
+                }    
+            }
+          }
+/*        error: function (xhr, status){
             console.log(xhr);
             if(refresh()){
                 console.log("Token was refreshed");
@@ -56,7 +70,8 @@ function add(){
             else{
                 console.log("Token was not refreshed");
             }
-        }});
+        }*/
+    });
         
         table.DataTable().row.add({
             "username":$('#add_username').val(),
