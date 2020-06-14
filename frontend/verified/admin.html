@@ -9,13 +9,6 @@
     <script src="./refresh.js"></script>
     <script src="./tableRequests.js"></script>
     <script src="./formManage.js"></script>
-    <script>
-        var table=$('#personTableFull');
-        $(document).ready(function(){
-            console.log('ready');
-            initiate();
-        });
-    </script>
     <style>
         h1{
             padding-top: 20px;
@@ -107,7 +100,13 @@
             <input type="button" value="close" onclick="closedelete()"></input>
         </form>
     </div>
-    
+    <script>
+        var table=$('#personTableFull');
+        $(document).ready(function(){
+            console.log('ready');
+            initiate();
+        });
+    </script>
 </body>
 
 </html>
