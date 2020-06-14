@@ -35,7 +35,6 @@
 </header>
 
 <body>
-    
     <div>
         <h1>Admin Service</h1>
         <table id="personTableFull" class="cell-border compact stripe hover order-column">
@@ -62,12 +61,13 @@
         <form class="form-container">
             <h1>Update user</h1>
             
-            <label for="email"><b>Email</b></label>
-            <input type="text" placeholder="Enter Email" name="email" required>
-            
-            <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-            
+            <input type="text" class="inputfield" id="add_username" placeholder="Enter Username" required>
+            <input type="text" class="inputfield" id="add_name" placeholder="Enter Name" required>
+            <input type="text" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
+            <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" required>
+            <label><input type="checkbox" class="inputfield" id="add_valid" value="">Option 1</label>
+            <label><input type="checkbox" class="inputfield" id="add_adminrole" value="">Option 1</label>
+            <label><input type="checkbox" class="inputfield" id="add_userrole" placeholder="isUser" value="">Option 1</label>   
             <input type="button" value="put" onclick="update()"></input>
             <input type="button" value="close" onclick="closeupdate()"></input>
         </form>
@@ -81,9 +81,9 @@
             <input type="text" class="inputfield" id="add_name" placeholder="Enter Name" required>
             <input type="text" class="inputfield" id="add_phone" placeholder="Enter Phone number" required>
             <input type="password" class="inputfield" id="add_password" placeholder="Enter Password" required>
-            <input type="checkbox" class="inputfield" id="add_valid" placeholder="isValid" required>
-            <input type="checkbox" class="inputfield" id="add_adminrole" placeholder="isAdmin" required>
-            <input type="checkbox" class="inputfield" id="add_userrole" placeholder="isUser" required>
+            <label><input type="checkbox" class="inputfield" id="add_valid" value="">Option 1</label>
+            <label><input type="checkbox" class="inputfield" id="add_adminrole" value="">Option 1</label>
+            <label><input type="checkbox" class="inputfield" id="add_userrole" placeholder="isUser" value="">Option 1</label>
             <input type="button" value="post" onclick="add()"></input>
             <input type="button" value="close" onclick="closeadd()"></input>
         </form>
@@ -123,11 +123,8 @@
             $.ajax({'url':"http://10.167.80.144/user",'type': "GET",
             'contentType':"application/json",dataType: "json",
             success: function (response) {
-                var resp=response;
-                console.log(response);
-                console.log(resp);
                 table.DataTable({
-                    data: resp, 
+                    data: response, 
                     columns: [
                     {"data":"username"},
                     {"data":"name"},
@@ -150,7 +147,7 @@
             }});
         };
         initiate();
-    });
+    });//end of initate
     
     function openadd(){
         closeupdate();
@@ -158,6 +155,7 @@
         document.getElementById("addform").style.display = "block";
     }
     function closeadd(){
+        document.getElementById("addform").reset();
         document.getElementById("addform").style.display = "none";
     }
     function add(){
@@ -168,24 +166,30 @@
         if($('#add_userrole').val()){
             this_role.push("ROLE_USER");
         }
-        console.log(this_role);
-        $.ajax({url:"https://9d162669-3206-421a-8fe7-7d68482c1021.mock.pstmn.io/register",type: "POST",crossDomain: true,
-        data:{
+        $.ajax({url:"http://10.167.80.144/user",'type': "POST",
+        data:JSON.stringify({
             username:$('#add_username').val(),
             name:$('#add_name').val(),
             phone:$('#add_phone').val(),
             password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
             valid:$('#add_valid').val(),
-            role:this_role.toString()},
+            role:this_role.toString()}),
+            'contentType':"application/json",
             dataType: "json",
             success: function (response){
-                var resp = response;
-                console.log(resp);
+                console.log(respone);
             },
             error: function (xhr, status){
-                alert("error");
-                console.log('invalid');
+                refresh();
+                if(refresh_success){
+                    console.log("Token was refreshed");
+                    add();
+                }
+                else{
+                    console.log("Token was not refreshed");
+                }
             }});
+            
             table.DataTable().row.add({
                 "username":$('#add_username').val(),
                 "name":$('#add_name').val(),
@@ -193,9 +197,10 @@
                 "password":CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
                 "valid":$('#add_valid').val(),
                 "roles":this_role.toString()}).draw();
+                
                 closeadd();
                 
-            }
+            }//end of add
             
             function openupdate(){
                 closeadd();
@@ -203,34 +208,75 @@
                 document.getElementById("updateform").style.display = "block";
             }
             function closeupdate(){
+                document.getElementById("updateform").reset();
                 document.getElementById("updateform").style.display = "none";
             }
             function update(){
-                //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
-            }
+                let this_role=[];
+                if($('#add_adminrole').val()){
+                    this_role.push("ROLE_ADMIN");
+                }
+                if($('#add_userrole').val()){
+                    this_role.push("ROLE_USER");
+                }
+                $.ajax({url:"http://10.167.80.144/user",'type': "PUT",
+                data:JSON.stringify({
+                    username:$('#add_username').val(),
+                    name:$('#add_name').val(),
+                    phone:$('#add_phone').val(),
+                    password:CryptoJS.MD5($('#add_password').val()).toString(CryptoJS.enc.Base64),
+                    valid:$('#add_valid').val(),
+                    role:this_role.toString()}),
+                    'contentType':"application/json",
+                    dataType: "json",
+                    success: function (response){
+                        console.log(respone);
+                    },
+                    error: function (xhr, status){
+                        refresh();
+                        if(refresh_success){
+                            console.log("Token was refreshed");
+                            add();
+                        }
+                        else{
+                            console.log("Token was not refreshed");
+                        }
+                    }});
+                    initiate();
+                    closeupdate();
+                    //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
+                }
+                
+                function opendelete(){
+                    closeadd();
+                    closeupdate();
+                    document.getElementById("deleteform").style.display = "block";
+                }
+                function closedelete(){
+                    document.getElementById("deleteform").reset();
+                    document.getElementById("deleteform").style.display = "none";
+                }
+                function del(){
+                    $.ajax({url:"http://10.167.80.144/user/"+$('#delete_username').val(),'type':"DELETE",
+                    success: function (response){
+                        var resp = response;
+                        console.log(resp);
+                    },
+                    error: function (xhr, status){
+                        refresh();
+                        if(refresh_success){
+                            console.log("Token was refreshed");
+                            del();
+                        }
+                        else{
+                            console.log("Token was not refreshed");
+                        }
+                    }});
+                    closedelete();
+                    initiate();
+                    //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
+                }
+                
+            </script>
+            </html>
             
-            function opendelete(){
-                closeadd();
-                closeupdate();
-                document.getElementById("deleteform").style.display = "block";
-            }
-            function closedelete(){
-                document.getElementById("deleteform").style.display = "none";
-            }
-            function del(){
-                $.ajax({url:"https://9d162669-3206-421a-8fe7-7d68482c1021.mock.pstmn.io/register/"+$('#delete_username').val(),type: "DELETE",crossDomain: true,
-                success: function (response){
-                    var resp = response;
-                    console.log(resp);
-                },
-                error: function (xhr, status){
-                    alert("error");
-                    console.log('invalid');
-                }});
-                closedelete();
-                //https://stackoverflow.com/questions/38392464/how-to-find-a-specific-row-by-values-in-jquery-datatables
-            }
-            
-        </script>
-        </html>
-        
