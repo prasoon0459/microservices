@@ -161,6 +161,7 @@
         else{
           alert("Please Re-enter Passwords");
           document.getElementById("register").reset();
+          $(this).prop('disabled', false);
         }
       });
     });
