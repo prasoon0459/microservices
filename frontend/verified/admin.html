@@ -1,11 +1,8 @@
 <html>
 <header>
     <script>
-        if(sessionStorage.getItem("loggedin")){
-            console.log(loggedin);
-            /*if(sessionStorage.getItem("role")!='admin'){
-                window.location.replace("../signin.html");
-            }*/
+        if(sessionStorage.getItem("session_data")){
+            console.log('in session');
         }
         else{
             window.location.replace("../signin.html");

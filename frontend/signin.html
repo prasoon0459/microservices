@@ -1,7 +1,7 @@
 <html>
 <head>
   <script>
-    if(sessionStorage.getItem("loggedin")){
+    if(sessionStorage.getItem("session_data")){
       window.location.replace("index.html");
     }
   </script>
@@ -152,7 +152,10 @@
         'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
         'contentType':"application/json",dataType: "json",
         success: function (response) {
-          sessionStorage.setItem("loggedin",true);
+          let d =new Date(response.timestamp);
+          d.setDate(d.getDate()+60);
+          localStorage.setItem("TTLRefresh",d.toString());
+          sessionStorage.setItem("session_data",true);
           sessionStorage.setItem("response_username",response.username);
           sessionStorage.setItem("response_phone",response.phone);
           sessionStorage.setItem("response_username",response.username);

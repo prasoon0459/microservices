@@ -1,17 +1,9 @@
 
 <html>
 <head>
-  <script src="./verified/refresh.js"></script>
-  <script>
-    if(sessionStorage.getItem("loggedin")){
-      console.log('logged in');
-    }
-    else{
-      console.log(refresh());
-    }
-  </script>
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="./logout.js"></script>
+  <script src="./verified/refresh.js"></script>
   <title>Home</title>
 </head>
 <style>
@@ -95,25 +87,52 @@
     </div>
   </div>
   <script>
-      if(sessionStorage.getItem("loggedin")){
-        if(sessionStorage.getItem("response_role")=="ROLE_ADMIN"){
-          document.getElementById("admin").style.display = "list-tem";
+    let session=false;
+    
+    
+    if( (new Date()).getTime() > (new Date(localStorage.getItem("TTLRefresh"))).getTime() ){
+      console.log('in TTL');
+      if(sessionStorage.getItem("session_data")){
+        console.log('has session data');
+        session=true;
+      }
+      else{
+        console.log('no session data');
+        if(refresh()){
+          sesssion=true;
         }
         else{
-          document.getElementById("admin").style.display = "none";
+          localStorage.removeItem("TTLRefresh");//inconsistency
+          console.log('inconsistent');
+          session=false;
         }
-        document.getElementById("welcome").style.display = "list-item";
-        document.getElementById("signin").style.display = "none";
-        document.getElementById("register").style.display = "none";
-        document.getElementById("logout").style.display = "list-item";
+      }
+    }
+    else{
+      console.log('not in TTL');
+      session=false;
+    }
+    
+    
+    if(session){
+      if(sessionStorage.getItem("response_role")=="ROLE_ADMIN"){
+        document.getElementById("admin").style.display = "list-tem";
       }
       else{
         document.getElementById("admin").style.display = "none";
-        document.getElementById("welcome").style.display = "none";
-        document.getElementById("signin").style.display = "list-item";
-        document.getElementById("register").style.display = "list-item";
-        document.getElementById("logout").style.display = "none";
       }
+      document.getElementById("welcome").style.display = "list-item";
+      document.getElementById("signin").style.display = "none";
+      document.getElementById("register").style.display = "none";
+      document.getElementById("logout").style.display = "list-item";
+    }
+    else{
+      document.getElementById("admin").style.display = "none";
+      document.getElementById("welcome").style.display = "none";
+      document.getElementById("signin").style.display = "list-item";
+      document.getElementById("register").style.display = "list-item";
+      document.getElementById("logout").style.display = "none";
+    }
   </script>
 </body>
 </html>
