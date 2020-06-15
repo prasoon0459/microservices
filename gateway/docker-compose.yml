@@ -1,0 +1,126 @@
+version: "3"
+
+networks:
+ kong_net:
+  driver: bridge
+
+services:
+
+  #######################################
+  # Postgres: The database used by Kong
+  #######################################
+  kong_database:
+    image: postgres:9.6
+    restart: always
+    networks:
+      - kong_net
+    environment:
+      PGDATA: /var/lib/postgresql/data/pgdata
+      POSTGRES_USER: kong
+      POSTGRES_PASSWORD: kong
+      POSTGRES_DB: kong
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    volumes:
+      - posvol:/var/lib/postgresql/data
+    shm_size:  256m
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "kong"]
+      interval: 60s
+      timeout: 5s
+      retries: 5
+    #ulimits:
+    #  noproc:65535
+    #  nofile:
+    #    soft:20000
+    #    hard:40000
+
+  #######################################
+  # Kong database migration
+  #######################################
+  kong_migration:
+    image: kong:latest
+    command: "kong migrations bootstrap"
+    networks:
+      - kong_net
+    restart: on-failure
+    environment:
+      KONG_PG_HOST: kong_database
+      KONG_PG_PASSWORD: kong
+    links:
+      - kong_database
+    depends_on:
+      - kong_database
+
+  #######################################
+  # Kong: The API Gateway
+  #######################################
+  kong:
+    image: kong:latest
+    restart: always
+    networks:
+      - kong_net
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong_database
+      KONG_PG_PASSWORD: kong
+      #KONG_PROXY_LISTEN: 0.0.0.0:8000
+      #KONG_PROXY_LISTEN_SSL: 0.0.0.0:8443
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001,0.0.0.0:8444 ssl
+      #KONG_ADMIN_LISTEN_SSL: 0.0.0.0:8444      
+    depends_on:
+      - kong_migration
+      - kong_database
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://kong:8001"]
+      interval: 5s
+      timeout: 2s
+      retries: 15
+    ports:
+      - "80:8000"
+      - "443:8443"
+    #ulimits:
+    #  noproc:65535
+    #  nofile:
+    #    soft:20000
+    #    hard:40000
+
+
+  #######################################
+  # Konga database prepare
+  #######################################
+  konga_prepare:
+    image: pantsel/konga:latest
+    command: "-c prepare -a postgres -u postgres://kong:kong@kong_database:5432/konga"
+    networks:
+      - kong_net
+    restart: on-failure
+    links:
+      - kong_database
+    depends_on:
+      - kong_database
+
+  #######################################
+  # Konga: Kong GUI
+  #######################################
+  konga:
+    image: pantsel/konga:latest
+    restart: always
+    networks:
+        - kong_net
+    environment:
+      DB_ADAPTER: postgres
+      DB_URI: postgres://kong:kong@kong_database:5432/konga
+      TOKEN_SECRET: konga_JWT_signing_secret
+      NODE_ENV: production
+    depends_on:
+      - kong_database
+    ports:
+      - "1337:1337"
+    #ulimits:
+    #  noproc:65535
+    #  nofile:
+    #    soft:20000
+    #    hard:40000
