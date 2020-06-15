@@ -153,18 +153,20 @@
         'contentType':"application/json",dataType: "json",
         success: function (response) {
           sessionStorage.setItem("loggedin",true);
-          console.log(response);
-          sessionStorage.setItem("response_data",response);
+          console.log(response.toString());
+          sessionStorage.setItem("response_data",response.name);
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {
           alert("Incorrect username or password");
           $(this).prop('disabled', false);
+          document.getElementById("form").reset();
         }});
         }
         else{
           alert("Password should be atleast 8 characters");
           $(this).prop('disabled', false);
+          document.getElementById("form").reset();
         }
       });
     });

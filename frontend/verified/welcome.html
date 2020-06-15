@@ -2,7 +2,7 @@
 <head>
    <script>
       if(sessionStorage.getItem("loggedin")){
-        console.log(loggedin);
+        console.log('loggedin');
       }
       else{
         window.location.replace("../signin.html");
@@ -83,7 +83,7 @@
       <li id="logout" onclick="logout()">Logout</li>
     </ul>
     <div class="title">
-      <h1>WELCOME!</h1>
+      <h1 id="intro">WELCOME!</h1>
     </div>
   </div>
   <script>
@@ -96,6 +96,7 @@
         document.getElementById("home").style.display = "list-tem";
         document.getElementById("welcome").style.display = "list-tem";
         document.getElementById("welcome").style.display = "list-tem";
+        document.getElementById("intro").innerHTML+=sessionStorage.getItem("response_data");
   </script>
 </body>
 </html>
