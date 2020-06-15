@@ -1,6 +1,7 @@
 function openadd(){
     closeupdate();
     closedelete();
+    document.getElementById("add_username").focus();
     document.getElementById("addform").style.display = "block";
 }
 function closeadd(){
@@ -11,6 +12,7 @@ function closeadd(){
 function openupdate(){
     closeadd();
     closedelete();
+    document.getElementById("update_username").focus();
     document.getElementById("updateform").style.display = "block";
 }
 function closeupdate(){
@@ -21,6 +23,7 @@ function closeupdate(){
 function opendelete(){
     closeadd();
     closeupdate();
+    document.getElementById("delete_username").focus();
     document.getElementById("deleteform").style.display = "block";
 }
 function closedelete(){

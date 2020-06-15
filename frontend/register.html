@@ -120,10 +120,10 @@
     <div class="formbox">
       <form id="register" class="inputgroup" autocomplete="off">
         <h1>Signup</h1>
-        <input type="text" class="inputfield" id="username" placeholder="Enter Username" required>
+        <input type="text" class="inputfield" id="username" placeholder="Enter Username" required autofocus>
         <input type="text" class="inputfield" id="name" placeholder="Enter Name" required>
         <input type="number" class="inputfield" id="phone" placeholder="Enter Phone number" required>
-        <input type="password" class="inputfield" id="password" placeholder="Enter Password" minlength="8" required>
+        <input type="password" class="inputfield" id="password" placeholder="Password atleast 8 charaters" minlength="8" required>
         <input type="password" class="inputfield" id="repassword" placeholder="Re-enter Password" minlength="8" required>
         <button type="button" value="Signup" class="submitbtn" id="btn-submit" value="Signup"><b>Signup</b></button>
       </form>
@@ -137,7 +137,7 @@
         let _phone = $('#phone').val();
         let _password = $('#password').val();
         let _repassword = $('#repassword').val();
-        if(_password==_repassword){
+        if((_password==_repassword) && ((typeof _phone)=="number") && (length(_password)>7)){
           $.ajax({'url':"http://10.167.80.144/auth/register",'type': "POST",
           'data':JSON.stringify({username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
           'contentType':"application/json",dataType: "json",

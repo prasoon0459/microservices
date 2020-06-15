@@ -1,8 +1,7 @@
 <html>
 <head>
   <script>
-    var loggedin = sessionStorage.getItem("loggedin");
-    if(loggedin==true){
+    if(sessionStorage.getItem("loggedin")){
       window.location.replace("index.html");
     }
   </script>
@@ -134,7 +133,7 @@
     <div class="formbox">
       <form id="form" class="inputgroup" autocomplete="off">
         <h1>Login</h1>
-        <input type="text" class="inputfield" name="username" id="username" placeholder="Enter Username" required>
+        <input type="text" class="inputfield" name="username" id="username" placeholder="Enter Username" required autofocus>
         <input type="password" class="inputfield" name="password" id="password" placeholder="Enter Password" color="white" minlength="8" required>
         <button type="button" name="submit" id="btn-submit" class="submitbtn" ><b>Login</b>
         </button>
@@ -148,15 +147,25 @@
         $(this).prop('disabled', true);
         let _username = $('#username').val();
         let _password = $('#password').val();
+        if(length(_password)>7){
         $.ajax({'url':"http://10.167.80.144/auth/signin",'type': "POST",
         'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
         'contentType':"application/json",dataType: "json",
         success: function (response) {
+          sessionStorage.setItem("loggedin",true);
+          console.log(response);
+          sessionStorage.setItem("response_data",response);
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {
-          alert("error");
+          alert("Incorrect username or password");
+          $(this).prop('disabled', false);
         }});
+        }
+        else{
+          alert("Password should be atleast 8 characters");
+          $(this).prop('disabled', false);
+        }
       });
     });
   </script>
