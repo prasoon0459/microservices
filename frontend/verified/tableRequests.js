@@ -48,7 +48,6 @@ function add(){
         valid:this_valid,
         roles:this_role}),
         'contentType':"application/json",
-        dataType: "json",
         success: function (response){
             console.log(respone);
         },
@@ -95,7 +94,6 @@ function add(){
             valid:this_valid,
             roles:this_role}),
             'contentType':"application/json",
-            dataType: "json",
             success: function (response){
                 console.log(response);
             },
