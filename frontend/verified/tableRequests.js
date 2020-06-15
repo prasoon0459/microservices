@@ -113,7 +113,7 @@ function add(){
             }
         });
         table.DataTable().rows( function ( idx, data, node ) {
-            return data.username == $('#update_username').val();
+            return (data.username).equals( $('#update_username').val());
         }).remove().draw();
         table.DataTable().row.add({
             "username":$('#update_username').val(),
@@ -145,7 +145,7 @@ function add(){
                 }
             }});
             table.DataTable().rows( function ( idx, data, node ) {
-                return data.username == $('#delete_username').val();
+                return (data.username).equals($('#delete_username').val());
             }).remove().draw();
             closedelete();
         }

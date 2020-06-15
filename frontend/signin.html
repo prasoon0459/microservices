@@ -158,8 +158,8 @@
           sessionStorage.setItem("session_data",true);
           sessionStorage.setItem("response_username",response.username);
           sessionStorage.setItem("response_phone",response.phone);
-          sessionStorage.setItem("response_name",response.ionname);
-          sessionStorage.setItem("response_roles",response.roles[0]);
+          sessionStorage.setItem("response_name",response.name);
+          sessionStorage.setItem("response_roles",JSON.parse(response.roles)[0]);
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {
