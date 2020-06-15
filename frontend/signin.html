@@ -163,7 +163,7 @@
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {
-          $(this).prop('disabled', false);
+          $('#btn-submit').prop('disabled', false);
           alert("Incorrect username or password");
           document.getElementById("form").reset();
         }});

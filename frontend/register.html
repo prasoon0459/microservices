@@ -148,12 +148,12 @@
             if(xhr.status==409){
               document.alert('Username already taken');
               document.getElementById("register").reset();
-              $(this).prop('disabled', false);
+              $('#btn-submit').prop('disabled', false);
             }
             else{
               alert("Please try again");
               document.getElementById("register").reset();
-              $(this).prop('disabled', false);
+              $('#btn-submit').prop('disabled', false);
             }
           }});
         } 
