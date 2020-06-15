@@ -1,13 +1,8 @@
 <html>
 <header>
     <script>
-        if(sessionStorage.getItem("session_roles")){
-            if((sessionStorage.getItem("session_roles")).equals("ROLE_ADMIN")){
+        if((sessionStorage.getItem("response_roles"))==("ROLE_ADMIN")){
             console.log('admin accessed');
-            }
-            else{
-                window.location.replace("../signin.html");    
-            }
         }
         else{
             window.location.replace("../signin.html");

@@ -137,7 +137,7 @@
         let _phone = $('#phone').val();
         let _password = $('#password').val();
         let _repassword = $('#repassword').val();
-        if((_password.equals(_repassword)) && (_password.length >7)){
+        if((_password==_repassword) && (_password.length >7)){
           $.ajax({'url':"http://10.167.80.144/auth/register",'type': "POST",
           'data':JSON.stringify({username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
           'contentType':"application/json",dataType: "json",
