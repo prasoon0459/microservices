@@ -3,6 +3,7 @@ function refresh(){
     $.ajax({'url':"http://10.167.80.144/auth/refresh",'type': "POST",
      'contentType':"application/json",dataType: "json",
     success: function (response) {
+        sessionStorage.setItem("session_data",true);
         sessionStorage.setItem("response_username",response.username);
         sessionStorage.setItem("response_phone",response.phone);
         sessionStorage.setItem("response_username",response.username);
