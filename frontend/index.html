@@ -88,28 +88,32 @@
   </div>
   <script>
     let session=false;
-    
-    
-    if( (new Date()).getTime() > (new Date(localStorage.getItem("TTLRefresh"))).getTime() ){
-      console.log('in TTL');
-      if(sessionStorage.getItem("session_data")){
-        console.log('has session data');
-        session=true;
-      }
-      else{
-        console.log('no session data');
-        if(refresh()){
-          sesssion=true;
+    if(localStorage.getItem("TTLRefresh")){//check for existence
+      if( (new Date()).getTime() > (new Date(localStorage.getItem("TTLRefresh"))).getTime()){//check for validity of existence
+        console.log('in TTL');
+        if(sessionStorage.getItem("session_data")){//check on existing, if in session 
+          console.log('has session data');
+          session=true;
         }
         else{
-          localStorage.removeItem("TTLRefresh");//inconsistency
-          console.log('inconsistent');
-          session=false;
+          console.log('no session data');
+          if(refresh()){
+            sesssion=true;
+          }
+          else{
+            localStorage.removeItem("TTLRefresh");//inconsistency
+            console.log('inconsistent');
+            session=false;
+          }
         }
+      }
+      else{
+        console.log('not in TTL');
+        session=false;
       }
     }
     else{
-      console.log('not in TTL');
+      console.log("not in TTL");
       session=false;
     }
     
