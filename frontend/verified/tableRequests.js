@@ -16,9 +16,10 @@ function initiate(){
     },
     error: function (xhr, status){
         console.log(xhr);
-        
         if(xhr.status==401){
-            if(refresh()){
+            let refresh_result=refresh();
+            console.log(refresh_result);
+            if(refresh_result){
                 console.log("Token was refreshed");
                 initiate();
             }

@@ -1,5 +1,6 @@
 <html>
 <head>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
    <script>
       if(sessionStorage.getItem("loggedin")){
         console.log('loggedin');
@@ -79,7 +80,7 @@
     <ul>
       <li id="home"><a href="../index.html">Home</a></li>
       <li id="welcome" class="active"><a href=#>Welcome</a></li>
-      <li id="admin"><a href=./admin.html>Admin</a></li>
+      <li id="admin" style="display:none;"><a href=./admin.html>Admin</a></li>
       <li id="logout" onclick=logout()><a href=../index.html>Logout</a></li>
     </ul>
     <div class="title">
@@ -87,7 +88,7 @@
     </div>
   </div>
   <script>
-        if(sessionStorage.getItem("role")=='admin'){
+        if(sessionStorage.getItem("response_roles")=="ROLE_ADMIN"){
           document.getElementById("admin").style.display = "list-tem";
         }
         else{
@@ -96,7 +97,9 @@
         document.getElementById("home").style.display = "list-tem";
         document.getElementById("welcome").style.display = "list-tem";
         document.getElementById("welcome").style.display = "list-tem";
-        document.getElementById("intro").innerHTML+=sessionStorage.getItem("response_data");
+        document.getElementById("intro").innerHTML+=sessionStorage.getItem("response_username");
+        console.log(Response_name);
+        console.log(Response_phone);
   </script>
 </body>
 </html>

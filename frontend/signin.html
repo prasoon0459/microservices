@@ -153,8 +153,12 @@
         'contentType':"application/json",dataType: "json",
         success: function (response) {
           sessionStorage.setItem("loggedin",true);
-          console.log(response.toString());
-          sessionStorage.setItem("response_data",response.name);
+          sessionStorage.setItem("response_username",response.username);
+          sessionStorage.setItem("response_phone",response.phone);
+          sessionStorage.setItem("response_username",response.username);
+          sessionStorage.setItem("response_roles",response.roles[0]);
+          console.log(response.roles[0]);
+          console.log(response.roles[1]);
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {

@@ -1,8 +1,9 @@
 
 <html>
 <head>
-  <title>Home</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="./logout.js"></script>
+  <title>Home</title>
 </head>
 <style>
   *
@@ -69,11 +70,11 @@
     <div class="mine">
       <ul>
         <li id="home" class="active"><a href="#">Home</a></li>
-        <li id="welcome"><a href=./verified/welcome.html>Welcome</a></li>
-        <li id="admin"><a href=./verified/admin.html>Admin</a></li>
-        <li id="signin"><a href=./signin.html>Signin</a></li>
-        <li id="register"><a href=./register.html>Signup</a></li>
-        <li id="logout" onclick=logout()><a href=./index.html>Logout</a></li>
+        <li id="signin" style="display:none;"><a href=./signin.html>Signin</a></li>
+        <li id="register" style="display:none;"><a href=./register.html>Signup</a></li>
+        <li id="welcome" style="display:none;"><a href=./verified/welcome.html>Welcome</a></li>
+        <li id="admin" style="display:none;"><a href=./verified/admin.html>Admin</a></li>
+        <li id="logout" style="display:none;" onclick=logout()><a href=./index.html>Logout</a></li>
       </ul>
     </div>
   </header>
@@ -86,7 +87,7 @@
   </div>
   <script>
       if(sessionStorage.getItem("loggedin")){
-        if(sessionStorage.getItem("role")=="admin"){
+        if(sessionStorage.getItem("response_role")=="ROLE_ADMIN"){
           document.getElementById("admin").style.display = "list-tem";
         }
         else{
