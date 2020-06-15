@@ -5,10 +5,11 @@ function logout(){
     success: function (response) {
         console.log('logout');
         sessionStorage.clear();
-        window.location.replace('index.html')
+        localStorage.removeItem("TTLRefresh");
+        window.location.replace('index.html');
     },
     error: function (xhr, status){
         console.log(xhr);
-        alert('Could not logout')
+        alert('Could not logout');
     }});
 }
