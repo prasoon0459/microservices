@@ -89,7 +89,7 @@
   <script>
     let session=false;
     if(localStorage.getItem("TTLRefresh")){//check for existence
-      if( (new Date()).getTime() > (new Date(localStorage.getItem("TTLRefresh"))).getTime()){//check for validity of existence
+      if( (new Date()).getTime() < (new Date(localStorage.getItem("TTLRefresh"))).getTime()){//check for validity of existence
         console.log('in TTL');
         if(sessionStorage.getItem("session_data")){//check on existing, if in session 
           console.log('has session data');
