@@ -89,14 +89,14 @@
   </div>
   <script>
         if((sessionStorage.getItem("response_roles"))==("ROLE_ADMIN")){
-          document.getElementById("admin").style.display = "list-tem";
+          document.getElementById("admin").style.display = "list-item";
         }
         else{
           document.getElementById("admin").style.display = "none";
         }
-        document.getElementById("home").style.display = "list-tem";
-        document.getElementById("welcome").style.display = "list-tem";
-        document.getElementById("welcome").style.display = "list-tem";
+        document.getElementById("home").style.display = "list-item";
+        document.getElementById("welcome").style.display = "list-item";
+        document.getElementById("welcome").style.display = "list-item";
         document.getElementById("intro").innerHTML+=sessionStorage.getItem("response_username");
         console.log(sessionStorage.getItem("response_name"));
         console.log(sessionStorage.getItem("response_phone"));
