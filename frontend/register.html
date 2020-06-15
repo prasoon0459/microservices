@@ -132,12 +132,13 @@
   <script>
     $(document).ready(function(){
       document.getElementById("btn-submit").addEventListener("click", function (event){
+        $(this).prop('disabled', true);
         let _username = $('#username').val();
         let _name = $('#name').val();
         let _phone = $('#phone').val();
         let _password = $('#password').val();
         let _repassword = $('#repassword').val();
-        if((_password==_repassword) && ((typeof _phone)=="number") && (length(_password)>7)){
+        if((_password==_repassword) && (_password.length >7)){
           $.ajax({'url':"http://10.167.80.144/auth/register",'type': "POST",
           'data':JSON.stringify({username:_username,name:_name,phone:_phone,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
           'contentType':"application/json",dataType: "json",
@@ -147,17 +148,19 @@
           'error': function (xhr, status){
             if(xhr.status==409){
               document.alert('Username already taken');
-              document.getElementById("form").reset();
+              document.getElementById("register").reset();
+              $(this).prop('disabled', false);
             }
             else{
               alert("Please try again");
-              document.getElementById("form").reset();
+              document.getElementById("register").reset();
+              $(this).prop('disabled', false);
             }
           }});
         } 
         else{
-          alert("Passwords dont match");
-          document.getElementById("form").reset();
+          alert("Please Re-enter Passwords");
+          document.getElementById("register").reset();
         }
       });
     });
