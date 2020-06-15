@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PutMapping;
 
-@CrossOrigin
 @RestController
 public class Router {
     
@@ -23,16 +21,28 @@ public class Router {
     @PostMapping(value="/user")
     public String create(@RequestBody final User rUser){
         try{
-            userRepository.save(rUser);
-            return "Added";
+            if(rUser.getRoles().isEmpty()){
+                return "User Roles Missing";    
+            }
+            else{
+                userRepository.save(rUser);
+                return "Added";
+            }
         } catch (final Exception e) {
             return "Already Exists or Insufficient Data";
         }
     }
 
     @GetMapping(value = "/user")
-    public List<User> read() {
-        return userRepository.findAll();
+    public List<User> read(){
+        try{
+            return userRepository.findAll();
+        }
+        catch(Exception e){
+           User exception=new User("this", "is", e.toString(),Long.valueOf(101),true,null);
+           List<User> except= List.of(exception);
+           return except;
+        }
     }
 
     @PutMapping(value = "/user")
@@ -42,10 +52,18 @@ public class Router {
             if (lUser.isEmpty()) {
                 return "User does not exist";
             } else {
-                (lUser.get()).setRoles(rUser.getRoles());
-                (lUser.get()).setValid(rUser.getValid());
-                userRepository.save(lUser.get());
-                return "Updated";
+                if(rUser.getRoles().isEmpty()){
+                    return "User Roles Missing";
+                }
+                else{
+                    (lUser.get()).setPassword(rUser.getPassword());
+                    (lUser.get()).setPhone(rUser.getPhone());
+                    (lUser.get()).setName(rUser.getName());
+                    (lUser.get()).setRoles(rUser.getRoles());
+                    (lUser.get()).setValid(rUser.getValid());
+                    userRepository.save(lUser.get());
+                    return "Updated";    
+                }
             }
         } catch (final Exception e) {
             return e.toString();

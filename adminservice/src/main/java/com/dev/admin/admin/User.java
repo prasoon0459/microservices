@@ -1,5 +1,6 @@
 package com.dev.admin.admin;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 @Entity
 @Table(name="users", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
 public class User implements Serializable{
@@ -26,28 +26,31 @@ public class User implements Serializable{
   Long id;
 
   @NotEmpty
+  @Column(length = 32)
   private String username;
   
   @NotEmpty
+  @Column(length = 64)
   private String password;
   
   @NotEmpty
+  @Column(length = 128)
   private String name;
   
   @NotEmpty
-  private String phone;
+  private Long phone;
 
-  private boolean valid;
+  private boolean valid=true;
   
   @ElementCollection(fetch = FetchType.EAGER)
   private List<String> roles = new ArrayList<>();
   
   public User() {
   }
-  public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty String phone,@NotEmpty Boolean valid, List<String> roles) {
+  public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty Long phone,@NotEmpty Boolean valid, List<String> roles) {
     super();
-    this.username = username;
-    this.password = password;
+    this.username=username;
+    this.password=password;
     this.name=name;
     this.phone=phone;
     this.valid=valid;
@@ -65,7 +68,7 @@ public class User implements Serializable{
   public String getName() {
     return this.name;
   }
-  public String getPhone() {
+  public Long getPhone() {
     return this.phone;
   }
 
@@ -88,7 +91,7 @@ public class User implements Serializable{
   public void setName(String name){
     this.name=name;
   }
-  public void setPhone(String phone) {
+  public void setPhone(Long phone) {
     this.phone=phone;
   }
 
