@@ -1,8 +1,8 @@
 function openadd(){
     closeupdate();
     closedelete();
-    document.getElementById("add_username").focus();
     document.getElementById("addform").style.display = "block";
+    document.getElementById("add_username").focus();
 }
 function closeadd(){
     document.getElementById("add-container").reset();
@@ -12,8 +12,8 @@ function closeadd(){
 function openupdate(){
     closeadd();
     closedelete();
-    document.getElementById("update_username").focus();
     document.getElementById("updateform").style.display = "block";
+    document.getElementById("update_username").focus();
 }
 function closeupdate(){
     document.getElementById("update-container").reset();
@@ -23,8 +23,8 @@ function closeupdate(){
 function opendelete(){
     closeadd();
     closeupdate();
-    document.getElementById("delete_username").focus();
     document.getElementById("deleteform").style.display = "block";
+    document.getElementById("delete_username").focus();
 }
 function closedelete(){
     document.getElementById("delete-container").reset();

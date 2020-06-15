@@ -147,7 +147,7 @@
         $(this).prop('disabled', true);
         let _username = $('#username').val();
         let _password = $('#password').val();
-        //if(_password.length>7){
+        if(_password.length>7){
         $.ajax({'url':"http://10.167.80.144/auth/signin",'type': "POST",
         'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
         'contentType':"application/json",dataType: "json",
@@ -167,12 +167,12 @@
           alert("Incorrect username or password");
           document.getElementById("form").reset();
         }});
-       /* }
+        }
         else{
           $(this).prop('disabled', false);
           alert("Password should be atleast 8 characters");
           document.getElementById("form").reset();
-        }*/
+        }
       });
     });
   </script>
