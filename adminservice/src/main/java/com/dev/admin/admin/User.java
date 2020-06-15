@@ -37,17 +37,16 @@ public class User implements Serializable{
   @Column(length = 128)
   private String name;
   
-  @NotEmpty
   private Long phone;
 
-  private boolean valid=true;
+  private boolean valid;
   
   @ElementCollection(fetch = FetchType.EAGER)
   private List<String> roles = new ArrayList<>();
   
   public User() {
   }
-  public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty Long phone,@NotEmpty Boolean valid, List<String> roles) {
+  public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, Long phone, boolean valid, List<String> roles) {
     super();
     this.username=username;
     this.password=password;
