@@ -97,15 +97,8 @@
         }
         else{
           console.log('no session data');
-          if(refresh()){
-            sesssion=true;
-          }
-          else{
-            localStorage.removeItem("TTLRefresh");//inconsistency
-            sessionStorage.clear();
-            console.log('inconsistent');
-            session=false;
-          }
+          refresh();
+          sesssion=true;
         }
       }
       else{
