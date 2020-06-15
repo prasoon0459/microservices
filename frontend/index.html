@@ -102,6 +102,7 @@
           }
           else{
             localStorage.removeItem("TTLRefresh");//inconsistency
+            sessionStorage.clear();
             console.log('inconsistent');
             session=false;
           }

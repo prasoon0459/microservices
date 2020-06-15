@@ -9,7 +9,7 @@ function logout(){
         window.location.replace('index.html');
     },
     error: function (xhr, status){
-        console.log(xhr);
+        console.log(xhr.status);
         alert('Could not logout');
     }});
 }
