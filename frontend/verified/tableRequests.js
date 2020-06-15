@@ -134,8 +134,7 @@ function add(){
             },
             error: function (xhr, status){
                 if(xhr.status==401){
-                    refresh();
-                    if(refresh_success){
+                    if(refresh()){
                         console.log("Token was refreshed");
                         del();
                     }

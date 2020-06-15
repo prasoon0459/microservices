@@ -158,14 +158,14 @@
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {
-          alert("Incorrect username or password");
           $(this).prop('disabled', false);
+          alert("Incorrect username or password");
           document.getElementById("form").reset();
         }});
         }
         else{
-          alert("Password should be atleast 8 characters");
           $(this).prop('disabled', false);
+          alert("Password should be atleast 8 characters");
           document.getElementById("form").reset();
         }
       });
