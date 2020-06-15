@@ -97,7 +97,7 @@ function add(){
             'contentType':"application/json",
             dataType: "json",
             success: function (response){
-                console.log(respone);
+                console.log(response);
             },
             error: function (xhr, status){
                 console.log(xhr);
