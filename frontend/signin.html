@@ -157,8 +157,6 @@
           sessionStorage.setItem("response_phone",response.phone);
           sessionStorage.setItem("response_username",response.username);
           sessionStorage.setItem("response_roles",response.roles[0]);
-          console.log(response.roles[0]);
-          console.log(response.roles[1]);
           window.location ="./verified/welcome.html";
         },
         error: function (xhr, status) {
