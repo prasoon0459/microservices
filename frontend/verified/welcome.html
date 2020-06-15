@@ -1,5 +1,16 @@
 <html>
 <head>
+  <script>//to be removed
+    sessionStorage.setItem("loggedin",true);
+  </script>
+  <script>
+      if(sessionStorage.getItem("loggedin")){
+        console.log(loggedin);
+      }
+      else{
+        window.location.replace("../signin.html");
+      }
+  </script>
   <title>Welcome</title>
   <style>
     *
@@ -63,20 +74,32 @@
     color:#000;    
   }
   </style>
-  
+  <script src="../logout.js"></script>
 </head>
 
 <body>
   <div class="mine">
     <ul>
-      <li><a href="../index.html">Home</a></li>
-      <li class="active"><a href=#>Welcome</a></li>
-      <li><a href=./admin.html>Admin</a></li>
+      <li id="home"><a href="../index.html">Home</a></li>
+      <li id="welcome" class="active"><a href=#>Welcome</a></li>
+      <li id="admin"><a href=./admin.html>Admin</a></li>
+      <li id="logout" onclick="logout()">Logout</li>
     </ul>
     <div class="title">
       <h1>WELCOME!</h1>
     </div>
   </div>
+  <script>
+        if(sessionStorage.getItem("role")=='admin'){
+          document.getElementById("admin").style.display = "list-tem";
+        }
+        else{
+          document.getElementById("admin").style.display = "none";
+        }
+        document.getElementById("home").style.display = "list-tem";
+        document.getElementById("welcome").style.display = "list-tem";
+        document.getElementById("welcome").style.display = "list-tem";
+  </script>
 </body>
 </html>
 

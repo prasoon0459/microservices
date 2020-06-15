@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Home</title>
+  <script src="../logout.js"></script>
 </head>
 <style>
   *
@@ -67,11 +68,12 @@
   <header>
     <div class="mine">
       <ul>
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href=./verified/welcome.html>Welcome</a></li>
-        <li><a href=./verified/admin.html>Admin</a></li>
-        <li><a href=./signin.html>Login</a></li>
-        <li><a href=./register.html>Signup</a></li>
+        <li id="home" class="active"><a href="#">Home</a></li>
+        <li id="welcome"><a href=./verified/welcome.html>Welcome</a></li>
+        <li id="admin"><a href=./verified/admin.html>Admin</a></li>
+        <li id="signin"><a href=./signin.html>Signin</a></li>
+        <li id="register"><a href=./register.html>Signup</a></li>
+        <li id="logout" onclick="logout()">Logout</li>
       </ul>
     </div>
   </header>
@@ -80,7 +82,30 @@
     <img src="./bits.jpg" style="width:350px;height:200px;padding: 20px;">
     <img src="./posidex.png" style="width:200px;height:200px;padding: 20px;">
     <div>
+    </div>
   </div>
-  </div>
+  <script>
+      var loggedin = sessionStorage.getItem("loggedin");
+      console.log(loggedin);
+      if(loggedin){
+        if(sessionStorage.getItem("role")=='admin'){
+          document.getElementById("admin").style.display = "list-tem";
+        }
+        else{
+          document.getElementById("admin").style.display = "none";
+        }
+        document.getElementById("welcome").style.display = "list-item";
+        document.getElementById("signin").style.display = "none";
+        document.getElementById("register").style.display = "none";
+        document.getElementById("logout").style.display = "list-item";
+      }
+      else{
+        document.getElementById("admin").style.display = "none";
+        document.getElementById("welcome").style.display = "none";
+        document.getElementById("signin").style.display = "list-item";
+        document.getElementById("register").style.display = "list-item";
+        document.getElementById("logout").style.display = "none";
+      }
+  </script>
 </body>
 </html>
