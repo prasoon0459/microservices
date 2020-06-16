@@ -88,17 +88,16 @@
   </div>
   <script>
     let session=false;
-    if(localStorage.getItem("TTLRefresh")){//check for existence
+    if(localStorage.getItem("TTLRefresh")){//check for existence - try using null time to simplify
       if( (new Date()).getTime() < (new Date(localStorage.getItem("TTLRefresh"))).getTime()){//check for validity of existence
         console.log('in TTL');
+        session=true;
         if(sessionStorage.getItem("session_data")){//check on existing, if in session 
           console.log('has session data');
-          session=true;
         }
         else{
           console.log('no session data');
           refresh();
-          sesssion=true;
         }
       }
       else{
