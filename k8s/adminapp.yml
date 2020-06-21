@@ -49,7 +49,7 @@ spec:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-      nodePort: 3090
+      nodePort: 32679
   selector:
     app: adminapp
   type: NodePort
