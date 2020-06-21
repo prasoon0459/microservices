@@ -1,33 +1,46 @@
 version: "3.3"
+
+networks:
+ kong_net:
+  driver: bridge  
+  driver_opts:
+            com.docker.network.enable_ipv6: "true"
+  
 services:
-  postgres:
-    image: postgres:latest
-    network_mode: bridge
+  userdb:
+    image: postgres:9.6
+    #network_mode: bridge
+    networks:
+      - kong_net
     container_name: postgres
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - posvol:/var/lib/postgresql/data
     expose:
     - 5432
     ports:
-      - 5432:5432
+      - 5432
     environment:
          - POSTGRES_PASSWORD=password
          - POSTGRES_USER=postgres
          - POSTGRES_DB=testdb
     restart: unless-stopped
+    
 # APP*****************************************
+
   auth_app:
     image: auth_app
-    network_mode: bridge
+    #network_mode: bridge
+    networks:
+      - kong_net
     container_name: auth_app
     expose:
-      - 8080
+      - 8079
     ports:
-      - 8080:8080
+      - 8079:8079
     restart: unless-stopped
     depends_on:
-      - postgres
+      - userdb
     links:
-      - postgres
+      - userdb
 volumes:
-  postgres-data:
+  posvol:

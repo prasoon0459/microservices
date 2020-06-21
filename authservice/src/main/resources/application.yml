@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  port: 8079
+
 
 spring:
   jackson:
@@ -15,16 +16,16 @@ spring:
 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://postgres:5432/testdb
-    username: postgres
-    password: password
+    url: jdbc:postgresql://${POSTGRES_HOST}:5432/testdb
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASSWORD}
     
   jpa:
     openInView: false
     show_sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     properties:
       hibernate.jdbc.lob.non_contextual_creation: true
 

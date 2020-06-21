@@ -1,4 +1,5 @@
-FROM  openjdk:11
+FROM  openjdk:11-jre-slim
+EXPOSE 8079
 VOLUME /tmp
 ADD target/authApp-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-Dspring.profiles.active=container", "-jar","/app.jar"]
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /app.jar ${0} ${@}"]

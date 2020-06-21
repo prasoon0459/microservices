@@ -44,9 +44,11 @@ public class JwtTokenProvider {
        
     
     public String createToken(User user) {
-    	
+    	int ROLE = 2;
         Claims claims = Jwts.claims().setSubject(user.getUsername());
         claims.put("name",user.getName());
+        ROLE=user.getRoles().size()==2?0:(user.getRoles().contains("ROLE_ADMIN")?1:2);
+        claims.setIssuer(jwtProperties.getIssuer()+"_"+ROLE);
         claims.put("roles", user.getRoles());
         Date now = new Date();
         Date validity = new Date(now.getTime() + jwtProperties.getValidityInMs());
