@@ -37,7 +37,7 @@ spec:
               configMapKeyRef:
                 name: hostname-config
                 key: postgres_host
-        image: aayush21/admin:beta
+        image: aayush21/admin:charlie
 ---
 apiVersion: v1     
 kind: Service
