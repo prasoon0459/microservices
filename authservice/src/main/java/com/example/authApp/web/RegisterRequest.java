@@ -7,13 +7,13 @@ public class RegisterRequest implements Serializable {
 	private String username;
     private String password;
     private String name;
-    private String phone;
+    private long phone;
     
     
     public RegisterRequest() {
 	}
     
-	public RegisterRequest(String username, String password, String name, String phone) {
+	public RegisterRequest(String username, String password, String name, long phone) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -41,11 +41,11 @@ public class RegisterRequest implements Serializable {
 		this.name = name;
 	}
 
-	public String getPhone() {
+	public long getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
+	public void setPhone(long phone) {
 		this.phone = phone;
 	}
 	

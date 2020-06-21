@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -31,16 +32,19 @@ public class User implements UserDetails {
     Long id;
 
     @NotEmpty
+    @Column(length = 32)
     private String username;
 
     @NotEmpty
+    @Column(length = 64)
     private String password;
     
     @NotEmpty
+    @Column(length = 128)
     private String name;
     
     @NotEmpty
-    private String phone;
+    private Long phone;
     
     @NotEmpty
     private boolean valid=true;
@@ -51,7 +55,7 @@ public class User implements UserDetails {
 
     
     public User() {}
-	public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty String phone, List<String> roles) {
+	public User(@NotEmpty String username, @NotEmpty String password, @NotEmpty String name, @NotEmpty Long phone, List<String> roles) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -80,7 +84,7 @@ public class User implements UserDetails {
     public String getName() {
 		return name;
 	}
-	public String getPhone() {
+	public Long getPhone() {
 		return phone;
 	}
 	

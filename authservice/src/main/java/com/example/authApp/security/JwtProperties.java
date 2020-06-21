@@ -21,6 +21,7 @@ public class JwtProperties {
 	private static PrivateKey secretPrivateKey;
 	private static PublicKey secretPublicKey;
 	private long validityInMs = 3600000;
+	private static String issuer="lite"; 
 	//private long validityInMs = 30000;
 	private long refreshValidityInMs = 5184000000L;
 	private static String refreshSecret;
@@ -110,6 +111,12 @@ public class JwtProperties {
 	public String getRefreshSecret() {
 		return refreshSecret;
 	}
+
+	public String getIssuer() {
+		return issuer;
+	}
+	
+	
 
 	
 }
