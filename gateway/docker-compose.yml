@@ -1,9 +1,9 @@
 version: "3"
 
 networks:
- default:
-  external: true
-    name: kong_net
+  default:
+    external: true
+      name: kong_net
 
 services:
 
