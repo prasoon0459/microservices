@@ -1,0 +1,423 @@
+{
+    "keepWaitingPipelines": false,
+    "lastModifiedBy": "anonymous",
+    "limitConcurrent": true,
+    "stages": [
+      {
+        "account": "default",
+        "cloudProvider": "kubernetes",
+        "expectedArtifacts": [],
+        "manifests": [
+          {
+            "apiVersion": "v1",
+            "kind": "Namespace",
+            "metadata": {
+              "name": "demospace"
+            }
+          },
+          {
+            "apiVersion": "v1",
+            "data": {
+              "postgres_db": "testdb",
+              "postgres_password": "password",
+              "postgres_user": "postgres"
+            },
+            "kind": "ConfigMap",
+            "metadata": {
+              "labels": {
+                "partof": "postgres-label"
+              },
+              "name": "postgres-config",
+              "namespace": "demospace"
+            }
+          },
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+              "labels": {
+                "partof": "postgres-label"
+              },
+              "name": "postgres-dep",
+              "namespace": "demospace"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "app": "postgres-pod"
+                }
+              },
+              "template": {
+                "metadata": {
+                  "labels": {
+                    "app": "postgres-pod",
+                    "namespace": "demospace",
+                    "partof": "postgres-label"
+                  },
+                  "name": "postgres-pod"
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "env": [
+                        {
+                          "name": "POSTGRES_USER",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_user",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_PASSWORD",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_password",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_DB",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_db",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "PGDATA",
+                          "value": "/var/lib/postgresql/data/pgdata"
+                        }
+                      ],
+                      "image": "postgres",
+                      "name": "postgres",
+                      "ports": [
+                        {
+                          "containerPort": 5432,
+                          "name": "postgres"
+                        }
+                      ],
+                      "volumeMounts": [
+                        {
+                          "mountPath": "/var/lib/postgresql/data",
+                          "name": "postgres-storage"
+                        }
+                      ]
+                    }
+                  ],
+                  "volumes": [
+                    {
+                      "hostPath": {
+                        "path": "/var/lib/postgres-k8s/data",
+                        "type": "DirectoryOrCreate"
+                      },
+                      "name": "postgres-storage"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+              "labels": {
+                "partod": "postgres-label"
+              },
+              "name": "postgres-svc",
+              "namespace": "demospace"
+            },
+            "spec": {
+              "ports": [
+                {
+                  "port": 5432
+                }
+              ],
+              "selector": {
+                "app": "postgres-pod"
+              },
+              "type": "ClusterIP"
+            }
+          }
+        ],
+        "moniker": {
+          "app": "first-application"
+        },
+        "name": "Deploy (Manifest)",
+        "refId": "3",
+        "requisiteStageRefIds": [],
+        "skipExpressionEvaluation": false,
+        "source": "text",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "services": []
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "failPipeline": true,
+        "judgmentInputs": [],
+        "name": "Manual Judgment",
+        "notifications": [],
+        "refId": "5",
+        "requisiteStageRefIds": [
+          "3"
+        ],
+        "type": "manualJudgment"
+      },
+      {
+        "account": "default",
+        "cloudProvider": "kubernetes",
+        "manifests": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+              "labels": {
+                "partof": "authapp-label"
+              },
+              "name": "authapp-dep",
+              "namespace": "demospace"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "app": "authapp-pod-label"
+                }
+              },
+              "template": {
+                "metadata": {
+                  "labels": {
+                    "app": "authapp-pod-label",
+                    "partof": "authapp-label"
+                  },
+                  "name": "authapp-pod",
+                  "namespace": "demospace"
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "env": [
+                        {
+                          "name": "POSTGRES_USER",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_user",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_PASSWORD",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_password",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_DB",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_db",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_HOST",
+                          "value": "postgres-svc"
+                        }
+                      ],
+                      "image": "prasoon0459/auth_app:2.0.0",
+                      "name": "authapp"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+              "labels": {
+                "partof": "authapp-label"
+              },
+              "name": "authapp-svc",
+              "namespace": "demospace"
+            },
+            "spec": {
+              "ports": [
+                {
+                  "nodePort": 32678,
+                  "port": 8079,
+                  "protocol": "TCP",
+                  "targetPort": 8079
+                }
+              ],
+              "selector": {
+                "app": "authapp-pod-label"
+              },
+              "type": "NodePort"
+            }
+          }
+        ],
+        "moniker": {
+          "app": "first-application"
+        },
+        "name": "Deploy (Manifest)",
+        "refId": "7",
+        "requisiteStageRefIds": [
+          "5"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "text",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "services": []
+          }
+        },
+        "type": "deployManifest"
+      },
+      {
+        "account": "default",
+        "cloudProvider": "kubernetes",
+        "manifests": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+              "labels": {
+                "partof": "adminapp-label"
+              },
+              "name": "adminapp-dep",
+              "namespace": "demospace"
+            },
+            "spec": {
+              "replicas": 1,
+              "selector": {
+                "matchLabels": {
+                  "app": "adminapp-pod-label"
+                }
+              },
+              "template": {
+                "metadata": {
+                  "labels": {
+                    "app": "adminapp-pod-label",
+                    "partof": "adminapp-label"
+                  },
+                  "name": "adminapp-pod",
+                  "namespace": "demospace"
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "env": [
+                        {
+                          "name": "POSTGRES_USER",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_user",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_PASSWORD",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_password",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_DB",
+                          "valueFrom": {
+                            "configMapKeyRef": {
+                              "key": "postgres_db",
+                              "name": "postgres-config"
+                            }
+                          }
+                        },
+                        {
+                          "name": "POSTGRES_HOST",
+                          "value": "postgres-svc"
+                        }
+                      ],
+                      "image": "aayush21/admin:charlie",
+                      "name": "adminapp"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+              "labels": {
+                "partof": "adminapp-label"
+              },
+              "name": "adminapp-svc",
+              "namespace": "demospace"
+            },
+            "spec": {
+              "ports": [
+                {
+                  "nodePort": 32679,
+                  "port": 9090,
+                  "protocol": "TCP",
+                  "targetPort": 9090
+                }
+              ],
+              "selector": {
+                "app": "adminapp-pod-label"
+              },
+              "type": "NodePort"
+            }
+          }
+        ],
+        "moniker": {
+          "app": "first-application"
+        },
+        "name": "Deploy (Manifest)",
+        "refId": "8",
+        "requisiteStageRefIds": [
+          "5"
+        ],
+        "skipExpressionEvaluation": false,
+        "source": "text",
+        "trafficManagement": {
+          "enabled": false,
+          "options": {
+            "enableTraffic": false,
+            "services": []
+          }
+        },
+        "type": "deployManifest"
+      }
+    ],
+    "triggers": [
+      {
+        "enabled": true,
+        "source": "demo",
+        "type": "webhook"
+      }
+    ],
+    "updateTs": "1593113024000"
+  }
