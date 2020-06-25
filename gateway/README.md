@@ -3,7 +3,8 @@
 ### Important Points
 * All commands are in detached mode, hence use " docker logs <container name> "to view status.
 * " docker inspect <container_or_volume_or_network name> " to view properties for debugging.
-* Optionally docker-compose.yml can be used.
+* Optionally docker-compose.yml by navigating "docker-compose up" can be used. However in this case the network created would be named gateway_kong_net, so you will have to change it accordinly everywhere.
+* You might need to add '&' at end of docker-compose up or use Ctrl+Z to exit without stopping.
 
 ### Creating Network
 * docker network create kong_net
@@ -36,6 +37,12 @@
 2. Add starting user database for konga in docker secrets. https://github.com/pantsel/konga/blob/master/docs/SEED_DEFAULT_DATA.md
 3. Add support for multiple node mode in kong.
 4. -v "$PWD/my-postgres.conf":/etc/postgresql/postgresql.conf -c 'config_file=/etc/postgresql/postgresql.conf'
+
+### Post SetUp
+1. Go to the <IP:1337> , then register as admin.
+2. Login
+3. Enter Name for connection and then http://kong:8001  (You might want to generate an API key for the Kong Admin endpoint).
+4. Set up necessarry services, upstreams, routes and plugins.
 
 ### Documentation links:
 1. https://docs.konghq.com

@@ -1,3 +1,11 @@
+# Commands to Auth Service
+
+### Notes
+* This needs to be executed after setting up commands in Admin service.
+
+### Command
+* docker run --network=kong_net --name auth -d prasoon0459/auth_app:1.1.0
+
 # Methods
 - **REGISTER NEW USER** :
 
