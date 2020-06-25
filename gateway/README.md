@@ -3,7 +3,7 @@
 ### Important Points
 * All commands are in detached mode, hence use " docker logs <container name> "to view status.
 * " docker inspect <container_or_volume_or_network name> " to view properties for debugging.
-* Optionally docker-compose.yml by navigating "docker-compose up" can be used. However in this case the network created would be named gateway_kong_net, so you will have to change it accordinly everywhere.
+* Optionally docker-compose.yml by navigating "docker-compose up" can be used. However, the "docker network create kong_net" still needs to be run before hand.
 * You might need to add '&' at end of docker-compose up or use Ctrl+Z to exit without stopping.
 
 ### Creating Network
@@ -42,7 +42,9 @@
 1. Go to the <IP:1337> , then register as admin.
 2. Login
 3. Enter Name for connection and then http://kong:8001  (You might want to generate an API key for the Kong Admin endpoint).
-4. Set up necessarry services, upstreams, routes and plugins.
+4. Set up necessary services, upstreams, routes and plugins.
+5. Add auth service as http://auth:8079/auth. Route is /auth.
+6. Add admin service as http://admin:9090/user. Route is /admin.
 
 ### Documentation links:
 1. https://docs.konghq.com

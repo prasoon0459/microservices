@@ -1,3 +1,5 @@
+# docker network create kong_net
+
 version: "3"
 
 networks:

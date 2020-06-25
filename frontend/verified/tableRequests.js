@@ -1,5 +1,5 @@
 function initiate(){
-    $.ajax({'url':"http://10.167.80.144/user",'type': "GET",
+    $.ajax({'url':"http://bits.poc.com/user",'type': "GET",
     'contentType':"application/json",dataType: "json",
     success: function (response) {
         table.DataTable({
@@ -39,7 +39,7 @@ function add(){
         this_role.push("ROLE_USER");
     }
     let this_valid=$('#add_valid').is(":checked");
-    $.ajax({url:"http://10.167.80.144/user",'type': "POST",
+    $.ajax({url:"http://bits.poc.com/user",'type': "POST",
     data:JSON.stringify({
         username:$('#add_username').val(),
         name:$('#add_name').val(),
@@ -88,7 +88,7 @@ function add(){
             this_role.push("ROLE_USER");
         }
         let this_valid=$('#update_valid').is(":checked");
-        $.ajax({url:"http://10.167.80.144/user",'type': "PUT",
+        $.ajax({url:"http://bits.poc.com/user",'type': "PUT",
         data:JSON.stringify({
             username:$('#update_username').val(),
             name:$('#update_name').val(),
@@ -132,7 +132,7 @@ function add(){
         
         
         function del(){
-            $.ajax({url:"http://10.167.80.144/user/"+$('#delete_username').val(),'type':"DELETE",
+            $.ajax({url:"http://bits.poc.com/user/"+$('#delete_username').val(),'type':"DELETE",
             success: function (response){
                 if(response!="Deleted"){
                     alert(response);
