@@ -1,18 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: authapp
-  namespace: default
+  name: authapp-dep
+  namespace: demospace
+  labels:
+    partof: authapp-label
 spec:
   selector:
     matchLabels:
-      app: authapp
+      app: authapp-pod-label
   replicas: 1
   template:
     metadata:
-      name: authapp
+      name: authapp-pod
+      namespace: demospace
       labels:
-        app: authapp
+        app: authapp-pod-label
+        partof: authapp-label
     spec:
       containers:
       - name: authapp
@@ -33,17 +37,16 @@ spec:
                 name: postgres-config
                 key: postgres_db
           - name: POSTGRES_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: hostname-config
-                key: postgres_host
+            value: postgres-svc
         image: prasoon0459/auth_app:2.0.0
 ---
-apiVersion: v1     
+apiVersion: v1
 kind: Service
 metadata:
-  name: authapp
-  namespace: default
+  name: authapp-svc
+  namespace: demospace
+  labels:
+    partof: authapp-label
 spec:
   ports:
     - protocol: TCP
@@ -51,5 +54,5 @@ spec:
       targetPort: 8079
       nodePort: 32678
   selector:
-    app: authapp
+    app: authapp-pod-label
   type: NodePort
