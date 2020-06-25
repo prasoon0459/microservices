@@ -13,8 +13,6 @@ services:
   kong_database:
     image: postgres:9.6
     restart: always
-    networks:
-      - kong_net
     environment:
       PGDATA: /var/lib/postgresql/data/pgdata
       POSTGRES_USER: kong
@@ -44,8 +42,6 @@ services:
   kong_migration:
     image: kong:latest
     command: "kong migrations bootstrap"
-    networks:
-      - kong_net
     restart: on-failure
     environment:
       KONG_PG_HOST: kong_database
@@ -61,8 +57,6 @@ services:
   kong:
     image: kong:latest
     restart: always
-    networks:
-      - kong_net
     environment:
       KONG_DATABASE: postgres
       KONG_PG_HOST: kong_database
@@ -95,8 +89,6 @@ services:
   konga_prepare:
     image: pantsel/konga:latest
     command: "-c prepare -a postgres -u postgres://kong:kong@kong_database:5432/konga"
-    networks:
-      - kong_net
     restart: on-failure
     links:
       - kong_database
@@ -109,8 +101,6 @@ services:
   konga:
     image: pantsel/konga:latest
     restart: always
-    networks:
-        - kong_net
     environment:
       DB_ADAPTER: postgres
       DB_URI: postgres://kong:kong@kong_database:5432/konga
