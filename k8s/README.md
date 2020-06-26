@@ -67,7 +67,7 @@ helm install spin-chart stable/spinnaker
 * `minikube spin-deck --ip to get IP.`
 
 ### Error Graph
-![Error Graph](https://github.com/aayush-ag21/microservices/blob/master/k8s/ErrorGraph.JPG)
+![Error Graph](https://github.com/aayush-ag21/microservices/blob/master/k8s/ErrorGraph.jpg)
 
 ### Documentation links:
 1. https://kubernetes.io/docs/home/
