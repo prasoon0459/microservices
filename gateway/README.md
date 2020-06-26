@@ -7,10 +7,10 @@
 * You might need to add '&' at end of docker-compose up or use Ctrl+Z to exit without stopping.
 
 ### Creating Network
-* docker network create kong_net
+`docker network create kong_net`
 
 ### Instantiate PostgreSQL insatnce
-* docker run --shm-size=256m -e "PGDATA=/var/lib/postgresql/data/pgdata" -v posvol:/var/lib/postgresql/data --name kong_database --network=kong_net -e "POSTGRES_USER=kong" -e "POSTGRES_DB=kong" -e "POSTGRES_PASSWORD=kong" postgres:9.6
+``` docker run --shm-size=256m -e "PGDATA=/var/lib/postgresql/data/pgdata" -v posvol:/var/lib/postgresql/data --name kong_database --network=kong_net -e "POSTGRES_USER=kong" -e "POSTGRES_DB=kong" -e "POSTGRES_PASSWORD=kong" postgres:9.6```
 
 ### Setup KONG database in PostgreSQL
 * docker pull kong
