@@ -1,18 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: adminapp
-  namespace: default
+  name: adminapp-dep
+  namespace: demospace
+  labels:
+    partof: adminapp-label
 spec:
   selector:
     matchLabels:
-      app: adminapp
+      app: adminapp-pod-label
   replicas: 1
   template:
     metadata:
-      name: adminapp
+      name: adminapp-pod
+      namespace: demospace
       labels:
-        app: adminapp
+        app: adminapp-pod-label
+        partof: adminapp-label
     spec:
       containers:
       - name: adminapp
@@ -33,23 +37,22 @@ spec:
                 name: postgres-config
                 key: postgres_db
           - name: POSTGRES_HOST
-            valueFrom:
-              configMapKeyRef:
-                name: hostname-config
-                key: postgres_host
-        image: aayush21/admin:beta
+            value: postgres-svc
+        image: aayush21/admin:charlie
 ---
 apiVersion: v1     
 kind: Service
 metadata:
-  name: adminapp
-  namespace: default
+  name: adminapp-svc
+  namespace: demospace
+  labels:
+    partof: adminapp-label
 spec:
   ports:
     - protocol: TCP
       port: 9090
       targetPort: 9090
-      nodePort: 39090
+      nodePort: 32679
   selector:
-    app: adminapp
+    app: adminapp-pod-label
   type: NodePort

@@ -148,7 +148,7 @@
         let _username = $('#username').val();
         let _password = $('#password').val();
         if(_password.length>7){
-        $.ajax({'url':"http://10.167.80.144/auth/signin",'type': "POST",
+        $.ajax({'url':"http://bits.poc.com/auth/signin",'type': "POST",
         'data': JSON.stringify({username:_username,password:CryptoJS.MD5(_password).toString(CryptoJS.enc.Base64)}),
         'contentType':"application/json",dataType: "json",
         success: function (response) {

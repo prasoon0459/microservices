@@ -1,41 +1,45 @@
 apiVersion: v1
+kind: Namespace
+metadata:
+   name: demospace
+---
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: postgres-config
-  namespace: default
+  namespace: demospace
+  labels:
+    partof: postgres-label
 data:
   postgres_user: postgres
   postgres_password: password
   postgres_db: testdb
 ---
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: postgres-pv-claim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 32Gi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgres-dep
+  namespace: demospace
+  labels:
+    partof: postgres-label
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: postgres-pod
   template:
     metadata:
+      name: postgres-pod
       labels:
-        app: postgres
+        app: postgres-pod
+        partof: postgres-label
+        namespace: demospace
     spec:
       volumes:
         - name: postgres-storage
-          persistentVolumeClaim:
-            claimName: postgres-pv-claim
+          hostPath:
+            path: /var/lib/postgres-k8s/data
+            type: DirectoryOrCreate
       containers:
         - image: postgres
           name: postgres
@@ -67,10 +71,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: postgres
+  name: postgres-svc
+  namespace: demospace
+  labels:
+    partod: postgres-label
 spec:
   type: ClusterIP
   ports:
     - port: 5432
   selector:
-    app: postgres
+    app: postgres-pod
