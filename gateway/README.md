@@ -2,8 +2,8 @@
 
 ### Important Points
 * All commands are in detached mode, hence use " docker logs <container name> "to view status.
-* " docker inspect <container_or_volume_or_network name> " to view properties for debugging.
-* Optionally docker-compose.yml by navigating "docker-compose up" can be used. However, the "docker network create kong_net" still needs to be run before hand.
+* `docker inspect <container_or_volume_or_network name>` to view properties for debugging.
+* Optionally docker-compose.yml by navigating "docker-compose up" can be used. However, the `docker network create kong_net` still needs to be run before hand.
 * You might need to add '&' at end of docker-compose up or use Ctrl+Z to exit without stopping.
 
 ### Creating Network
